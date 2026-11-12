@@ -4,7 +4,13 @@
     {
       "name": "vegre",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4178", "--directory", "/Users/andyhaw/Veyra EHR/Vegre"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4178",
+        "--directory",
+        "Vegre"
+      ],
       "port": 4178
     }
   ]
