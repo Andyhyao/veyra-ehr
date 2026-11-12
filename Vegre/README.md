@@ -136,8 +136,9 @@ fictional demo rows. Its styles are prefixed `record-`.
 
 - **Logos** were cut from `Veyra-Logo-01.svg` / `Veyra-Logo-02.svg`: the artboard
   background was dropped and the viewBox tightened to the artwork, giving
-  `veyra-logo.svg` (dark), `veyra-logo-light.svg` (on dark), `veyra-mark.svg`,
-  `veyra-mark-white.svg` and `favicon.svg`.
+  `veyra-logo.svg` (dark), `veyra-logo-light.svg` (on dark), `veyra-mark-white.svg`
+  and `favicon.svg`. The `favicon-32.png` and `apple-touch-icon.png` fallbacks are
+  rasterised from `favicon.svg`.
 - **Section 08's two device cells are supplied footage, not renders.** Each clip is a device
   already shot in a scene, so neither cell draws a bezel: `.bx__stage--shot` carries the clips'
   flat backdrop (`#E8E8E8`) and `.bx__shot` sits the clip in it. The two clips were graded
@@ -158,8 +159,9 @@ fictional demo rows. Its styles are prefixed `record-`.
     last 0.6 s is cross-dissolved back over its own first 0.6 s. Without that the card flashed
     fully black for ~0.3 s every loop. The backdrop curve above is applied on top.
 
-  `../motion-in-practice/` and `../motion-on-rounds/` still hold the previous rendered loops,
-  and `assets/img/device-frame.png` is now unreferenced.
+  `../motion-in-practice/` and `../motion-on-rounds/` still hold the previous rendered loops.
+  The CSS device frame those cells used to draw is gone: `device-frame.png` and the
+  `.bx__dev*` rules were deleted once the supplied footage replaced them.
   the "Everything in context" scene centres a front-view CSS iPhone (`.bx__iphone`), cropped by
   the scene's bottom edge, around
   `assets/video/in-context-screen.{webm,mp4}` (13 s, same size) between the floating panels.
@@ -183,8 +185,8 @@ fictional demo rows. Its styles are prefixed `record-`.
   The clinic names, the testimonial and the compliance claims (HIPAA, SOC 2)
   are invented for the comp — replace them before anything ships publicly.
 - **Hero devices** are the supplied mockups with a rendered screen loop laid over the screen
-  each already shows: `.stage__mac` wraps `hero-macbook.png` + `assets/video/hero-mac.{webm,mp4}`
-  (10 s, 966 × 630, the analytics dashboard ticking over), `.stage__phone` wraps `hero-iphone.png`
+  each already shows: `.stage__mac` wraps `hero-macbook-analytics.webp` + `assets/video/hero-mac.{webm,mp4}`
+  (10 s, 966 × 630, the practice-analytics screen ticking over), `.stage__phone` wraps `hero-iphone.webp`
   + `assets/video/hero-phone.{webm,mp4}` (12 s, 402 × 874, the mobile site scrolling). The camera
   notch and Dynamic Island are redrawn on top. Videos use `preload="none"`, so the still image
   shows until a loop plays; they share the play-while-visible observer and stay still under
