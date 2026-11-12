@@ -86,7 +86,19 @@ claims. Specifically, the page must not assert certification, audited
 compliance, implemented security controls, measured performance, or customer
 adoption. Capability and security statements are written as design intent;
 figures in the Design-targets band are targets, not results; and the example
-organizations are labelled fictional where they appear.
+organizations are labelled fictional where they appear. The demo form follows
+the same rule: there is no backend behind it, so neither its resting note nor
+its success message claims a reply is coming.
+
+The Design-targets counters and the hero stat cards ship their real figure in
+the HTML. `app.js` zeroes them at registration (never under
+`prefers-reduced-motion`) and counts up when the group scrolls into view, so a
+visitor without JavaScript reads the figures rather than a row of zeroes.
+
+Text colour is token-driven for contrast: `--muted` is the on-light grey,
+`--muted-d` the on-navy one, and `--green-ink` the text-safe green (`--green`
+stays for fills and icons). Every text/background pair on the page meets WCAG
+AA; check with the sweep before changing a colour.
 
 The page uses a **liquid-glass card material**: `.glass` (translucent fill,
 `backdrop-filter: saturate(180%) blur(20px)`, a hairline light border, an inner

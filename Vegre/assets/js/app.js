@@ -158,6 +158,9 @@
     requestAnimationFrame(tick);
   };
   const counters = $$('[data-count]');
+  // The markup carries the real figure so a no-JS visitor reads it. Zero it only once we know we
+  // can animate; the band is still behind its stagger reveal here, so the reset is never seen.
+  if (!reduced) counters.forEach(el => { el.textContent = '0' + (el.dataset.suffix || ''); });
   if ('IntersectionObserver' in window) {
     const co = new IntersectionObserver((entries, obs) => {
       entries.forEach(e => { if (e.isIntersecting) { run(e.target); obs.unobserve(e.target); } });
@@ -171,10 +174,12 @@
     e.preventDefault();
     const input = $('input', form), note = $('[data-note]', form);
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim());
+    // There is no backend behind this form, so success must not imply one.
     note.textContent = ok
-      ? `Thanks — we'll be in touch at ${input.value.trim()} within one business day.`
+      ? 'That address checks out. Nothing was sent — Veyra is a product concept, so the form is not wired to anything.'
       : 'Please enter a valid work email address.';
-    note.style.color = ok ? 'var(--green)' : '#DC2626';
+    note.style.color = ok ? 'var(--green-ink)' : '#B42318';
+    input.setAttribute('aria-invalid', String(!ok));
     if (ok) form.reset();
   });
 
