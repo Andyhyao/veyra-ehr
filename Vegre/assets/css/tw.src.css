@@ -1,0 +1,27 @@
+/* Tailwind for the motion layer only: theme tokens and utilities, no preflight, so style.css keeps the base.
+   Every class carries the `tw:` prefix (tw:inline-block, tw:js:motion-safe:opacity-0, tw:lift) so words in the
+   page copy and the site's own class names can never turn into utilities.
+   Build with `npm run build:css` after changing classes in index.html or assets/js/. */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source "../../index.html";
+@source "../js/motion.js";
+
+/* `js:` applies only while scripting is on and Motion loaded (motion.js adds .no-motion otherwise),
+   so a pre-reveal hidden state can never strand content. */
+@custom-variant js (&:where(.js:not(.no-motion) *));
+
+/* Spring targets that motion.js drives through custom properties. They use the individual
+   `translate` and `scale` properties, so they stack with any `transform` a component already has. */
+@utility lift {
+  --lift: 0;
+  --lift-s: 1;
+  translate: 0 calc(var(--lift) * 1px);
+  scale: var(--lift-s);
+}
+@utility press {
+  --press: 1;
+  scale: var(--press);
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Veyra</title>
+<meta name="description" content="That page isn't part of the Veyra concept build. Head back to the overview.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563EB">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=38">
+<style>
+  /* 404 is a single centred panel; it borrows the page's tokens and button styles and adds nothing global. */
+  .nf{min-height:100svh;display:grid;place-items:center;padding:80px 0;
+    background:radial-gradient(120% 80% at 50% 0%,#FFFFFF,rgba(255,255,255,0) 68%),linear-gradient(170deg,#F7FAFF,#EDF4FF)}
+  .nf__in{text-align:center;display:grid;justify-items:center}
+  .nf__logo{display:inline-flex;margin-bottom:40px}
+  .nf__logo img{display:block}
+  .nf__code{font-family:var(--font-head);font-size:clamp(72px,14vw,132px);font-weight:800;line-height:.9;
+    letter-spacing:-.05em;color:var(--blue);margin-bottom:22px}
+  .nf h1{font-family:var(--font-head);font-size:clamp(28px,4.4vw,44px);font-weight:800;line-height:1.05;
+    letter-spacing:-.04em;margin-bottom:18px}
+  .nf__sub{max-width:46ch;font-size:17px;line-height:1.62;color:var(--slate);margin-bottom:34px}
+  .nf__cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .nf__links{margin-top:48px;padding-top:26px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:center}
+  .nf__links a{font-size:14.5px;font-weight:600;color:var(--slate);min-height:44px;display:inline-flex;align-items:center}
+  .nf__links a:hover{color:var(--blue-d)}
+  .nf__note{margin-top:34px;max-width:54ch;font-size:13.5px;line-height:1.55;color:var(--muted)}
+  @media (max-width:560px){.nf__cta .btn{flex:1 1 100%}}
+</style>
+</head>
+<body>
+<a class="skip" href="#nf-main">Skip to content</a>
+
+<main class="nf" id="nf-main">
+  <div class="shell nf__in">
+    <a class="nf__logo" href="index.html" aria-label="Veyra home">
+      <img src="assets/img/veyra-logo.svg" alt="Veyra" width="148" height="47">
+    </a>
+
+    <p class="nf__code">404</p>
+    <h1>This page isn&rsquo;t part of the build.</h1>
+    <p class="nf__sub">Veyra is a product concept, so the marketing site is a single page. Company,
+      legal and account pages are referenced in the navigation but were never built.</p>
+
+    <div class="nf__cta">
+      <a class="btn btn--primary btn--lg" href="index.html">Back to the overview
+        <svg class="arr" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn btn--ghost btn--lg" href="index.html#demo">Request a demo</a>
+    </div>
+
+    <nav class="nf__links" aria-label="Sections that do exist">
+      <a href="index.html#product">The record model</a>
+      <a href="index.html#platform">The platform</a>
+      <a href="index.html#workflow">Getting started</a>
+      <a href="index.html#security">Security</a>
+      <a href="index.html#showcase">In practice</a>
+    </nav>
+
+    <p class="nf__note">Veyra is a fictional product concept. Every organisation, patient, clinician
+      and figure shown across this site is invented.</p>
+  </div>
+</main>
+
+</body>
+</html>

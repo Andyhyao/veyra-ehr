@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "compositions/analytics.html"
+        ],
+        "createdAt": "2026-11-11T17:57:21.140Z",
+        "reason": "Claude: this file is a 966x630 device-screen mockup that renders inside a MacBook image at ~450px wide on the landing page, so its UI type is deliberately at app scale, not page reading scale; it must match the still baked into hero-macbook-analytics.webp"
+      }
+    ]
+  }
+}

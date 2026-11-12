@@ -1,0 +1,33 @@
+# dependencies
+node_modules/
+
+# downloaded toolchains (HyperFrames pulls ~400 MB of ffmpeg/chromium into .tools)
+.tools/
+
+# OS and editor cruft
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+
+# env and secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+
+# logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# HyperFrames working state — regenerable from the compositions.
+# The videos the site actually ships live in Vegre/assets/video and ARE tracked.
+.hyperframes/
+.thumbnails/
+motion-*/renders/
+
+# tool caches (the impeccable config itself is tracked; its cache is not)
+hook.cache.json

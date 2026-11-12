@@ -1,0 +1,15 @@
+{
+  "name": "motion-hero-mac",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes hyperframes@0.8.185 preview",
+    "check": "npx --yes hyperframes@0.8.185 check",
+    "render": "npx --yes hyperframes@0.8.185 render",
+    "publish": "npx --yes hyperframes@0.8.185 publish"
+  },
+  "devDependencies": {
+    "@ffprobe-installer/ffprobe": "^2.1.2",
+    "ffmpeg-static": "^5.3.0"
+  }
+}

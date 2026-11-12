@@ -1,0 +1,618 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-latin.woff2") format("woff2");
+      font-weight: 600 800;
+      font-style: normal;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      background: #eef2f8;
+      font-family: "Inter", sans-serif;
+      color: #0b1324;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Laid out in phone points, drawn at 2×. The photo fills the screen, then a record sheet slides up over it.
+       Every block has a fixed height so the scroll stops below are exact. */
+    #cx {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 844px;
+      overflow: hidden;
+      transform: scale(2);
+      transform-origin: 0 0;
+      background: #eef2f8;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 26px -18px rgba(30, 41, 74, 0.35);
+      backdrop-filter: saturate(170%) blur(18px);
+      -webkit-backdrop-filter: saturate(170%) blur(18px);
+    }
+    #cx-scroll {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 1756px;
+    }
+
+    /* hero photo */
+    #cx-hero {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 844px;
+      overflow: hidden;
+    }
+    #cx-photo {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 844px;
+    }
+    #cx-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 22%;
+    }
+    .hero__shade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 420px;
+      background: linear-gradient(180deg, rgba(8, 12, 22, 0) 0%, rgba(8, 12, 22, 0.55) 45%, rgba(8, 12, 22, 0.86) 100%);
+    }
+    #cx-intro {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 82px;
+      color: #ffffff;
+    }
+    .intro__id {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: rgba(255, 255, 255, 0.86);
+    }
+    .intro__name {
+      margin-top: 4px;
+      font-family: "Manrope", sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 38px;
+    }
+    .intro__sub {
+      margin-top: 4px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    .intro__tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .htag {
+      height: 28px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 99px;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .htag--flag {
+      background: #ffe3d8;
+      border-color: #ffd0bf;
+      color: #9a2a0c;
+    }
+    .hero__btn {
+      position: absolute;
+      top: 58px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 13px 0 9px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 600;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .hero__btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    .hero__btn--l {
+      left: 16px;
+    }
+    .hero__btn--r {
+      right: 16px;
+      width: 36px;
+      padding: 0;
+      justify-content: center;
+    }
+
+    /* record sheet */
+    #cx-sheet {
+      position: absolute;
+      left: 0;
+      top: 800px;
+      width: 390px;
+      height: 956px;
+      padding: 20px 16px 40px;
+      border-radius: 28px 28px 0 0;
+      background: linear-gradient(180deg, #f3f6fb 0%, #e9eef6 100%);
+      box-shadow: 0 -12px 30px -18px rgba(8, 12, 22, 0.5);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .grab {
+      position: absolute;
+      left: 177px;
+      top: 8px;
+      width: 36px;
+      height: 5px;
+      border-radius: 3px;
+      background: #c3ccda;
+    }
+    .card {
+      flex: none;
+      border-radius: 20px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 8px 22px -18px rgba(30, 41, 74, 0.4);
+    }
+    .card__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 22px;
+    }
+    .card__head h2 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Manrope", sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+    }
+    .card__head h2 svg {
+      width: 17px;
+      height: 17px;
+      color: #2563eb;
+    }
+    .card__aside {
+      font-size: 12px;
+      font-weight: 600;
+      color: #56657c;
+    }
+    .row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+    }
+    .row + .row {
+      border-top: 1px solid rgba(148, 163, 184, 0.24);
+    }
+    .row b {
+      display: block;
+      font-size: 14.5px;
+      font-weight: 700;
+    }
+    .row span.sub {
+      display: block;
+      margin-top: 1px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #56657c;
+    }
+    .pill {
+      height: 24px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pill svg {
+      width: 11px;
+      height: 11px;
+    }
+    .pill--blue { background: #dfe8ff; color: #1d4ed8; }
+    .pill--ok { background: #dcf5e6; color: #166534; }
+    .pill--flag { background: #ffe3d8; color: #9a2a0c; }
+    .pill--muted { background: #e8ecf2; color: #475569; }
+    .swap {
+      position: relative;
+      width: 100px;
+      height: 24px;
+    }
+    .swap .pill {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    #k-summary {
+      height: 76px;
+      padding: 0;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .tile {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+    }
+    .tile span {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #56657c;
+    }
+    .tile b {
+      display: block;
+      margin-top: 4px;
+      font-family: "Manrope", sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    #k-allergy { height: 96px; }
+    #k-meds { height: 190px; }
+    #k-problems { height: 132px; }
+    #k-pair {
+      height: 96px;
+      padding: 0;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    #k-pair .tile b {
+      font-size: 16px;
+    }
+    .tile__ico {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .tile__ico svg {
+      width: 15px;
+      height: 15px;
+      color: #2563eb;
+    }
+    #k-plan { height: 150px; }
+    #k-team { height: 84px; }
+    .bar {
+      position: relative;
+      height: 6px;
+      margin-top: 12px;
+      border-radius: 3px;
+      background: #e1e7f0;
+      overflow: hidden;
+    }
+    #plan-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      border-radius: 3px;
+      background: #2563eb;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 30px;
+      font-size: 13.5px;
+      font-weight: 600;
+    }
+    .step i {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      flex: none;
+      border-radius: 50%;
+      border: 1.6px solid #c4cedd;
+    }
+    .step i.is-done,
+    #step-2-on {
+      border: 0;
+      background: #16a34a;
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+    }
+    #step-2-on {
+      position: absolute;
+      inset: -1.6px;
+      border-radius: 50%;
+    }
+    .step i svg {
+      width: 10px;
+      height: 10px;
+    }
+    .step em {
+      margin-left: auto;
+      font-style: normal;
+      font-size: 12px;
+      font-weight: 600;
+      color: #56657c;
+    }
+    .steps {
+      margin-top: 6px;
+    }
+    .who {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .ava {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      flex: none;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #d0306f, #a3185a);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      font-style: normal;
+    }
+    .who b {
+      display: block;
+      font-size: 14.5px;
+      font-weight: 700;
+    }
+    .who span {
+      display: block;
+      font-size: 12px;
+      color: #56657c;
+    }
+
+    /* compact header once the photo has scrolled away */
+    #cx-head {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 108px;
+      border-radius: 0 0 22px 22px;
+      border-top: 0;
+      opacity: 0;
+      background: rgba(246, 248, 252, 0.86);
+    }
+    .head__row {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 58px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .head__ava {
+      width: 38px;
+      height: 38px;
+      flex: none;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .head__ava img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 14%;
+      transform: scale(1.35);
+      transform-origin: 50% 22%;
+    }
+    .head__txt {
+      flex: 1;
+    }
+    .head__txt b {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .head__txt span {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    #cx-bar {
+      position: absolute;
+      right: 3px;
+      top: 112px;
+      width: 3px;
+      height: 346px;
+      border-radius: 3px;
+      background: rgba(30, 41, 59, 0.38);
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="context" data-width="780" data-height="1688">
+    <div id="cx" data-layout-allow-overflow>
+      <div id="cx-scroll" data-layout-allow-overlap data-layout-allow-occlusion>
+        <div id="cx-hero">
+          <div id="cx-photo"><img src="assets/patient-photo.jpg" alt="Patient photo: Alex Morgan" /></div>
+          <span class="hero__shade"></span>
+          <span class="hero__btn hero__btn--l"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>Patients</span>
+          <span class="hero__btn hero__btn--r"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.5" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="12.5" cy="8" r="1.4" fill="currentColor"/></svg></span>
+          <div id="cx-intro">
+            <p class="intro__id">ID PT-184203</p>
+            <h1 class="intro__name">Alex Morgan</h1>
+            <p class="intro__sub">34 years &middot; Main District</p>
+            <div class="intro__tags"><span class="htag">Hypertension</span><span class="htag htag--flag">Penicillin allergy</span></div>
+          </div>
+        </div>
+
+        <div id="cx-sheet">
+          <span class="grab"></span>
+          <section class="card" id="k-summary">
+            <div class="tile"><span>Age</span><b>34</b></div>
+            <div class="tile"><span>Last BP</span><b>118/76</b></div>
+            <div class="tile"><span>Last visit</span><b>Apr 28</b></div>
+          </section>
+
+          <section class="card" id="k-allergy">
+            <div class="card__head"><h2><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 1.8 15 4v4.6c0 3.6-2.5 6.3-6 7.6-3.5-1.3-6-4-6-7.6V4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Allergies</h2><span class="card__aside">1 flagged</span></div>
+            <div class="row"><div><b>Penicillin</b><span class="sub">Shown on every order and prescription</span></div><span class="pill pill--flag">Flagged</span></div>
+          </section>
+
+          <section class="card" id="k-meds">
+            <div class="card__head"><h2><svg viewBox="0 0 18 18" aria-hidden="true"><rect x="2.3" y="6.2" width="13.4" height="5.6" rx="2.8" transform="rotate(-40 9 9)" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m6.9 6.6 4.2 4.8" stroke="currentColor" stroke-width="1.7"/></svg>Medications</h2><span class="card__aside">2 active</span></div>
+            <div class="meds" style="margin-top: 8px">
+              <div class="row"><div><b>Demo medication A</b><span class="sub">10 mg &middot; Oral &middot; Once daily</span></div>
+                <span class="swap"><span class="pill pill--muted" id="ma-due">To review</span><span class="pill pill--ok" id="ma-ok"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reconciled</span></span>
+              </div>
+              <div class="row"><div><b>Demo medication B</b><span class="sub">5 mg &middot; Oral &middot; Twice daily</span></div>
+                <span class="swap"><span class="pill pill--muted" id="mb-due">To review</span><span class="pill pill--ok" id="mb-ok"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reconciled</span></span>
+              </div>
+            </div>
+          </section>
+
+          <section class="card" id="k-problems">
+            <div class="card__head"><h2><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M1.5 9.5h3.2l2-5 3.4 9 2-4h4.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Problems</h2><span class="card__aside">1 active</span></div>
+            <div style="margin-top: 4px">
+              <div class="row"><div><b>Hypertension</b><span class="sub">Since 2023</span></div><span class="pill pill--blue">Active</span></div>
+              <div class="row"><div><b>Demo problem 2</b><span class="sub">2021</span></div><span class="pill pill--muted">Resolved</span></div>
+            </div>
+          </section>
+
+          <section class="card" id="k-pair">
+            <div class="tile"><span class="tile__ico"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 8.4 3.1 3L13 4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Immunisations</span><b>Up to date</b><span style="margin-top: 3px">Reviewed Apr 28</span></div>
+            <div class="tile"><span class="tile__ico"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2" y="2.5" width="12" height="11" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m3.5 11 3-3.2 2.2 2.2 1.6-1.6L12.5 11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>Imaging</span><b>1 study</b><span style="margin-top: 3px">Demo study &middot; Mar 12</span></div>
+          </section>
+
+          <section class="card" id="k-plan">
+            <div class="card__head"><h2><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M5 2.5h8a1.5 1.5 0 0 1 1.5 1.5v10.5A1.5 1.5 0 0 1 13 16H5a1.5 1.5 0 0 1-1.5-1.5V4A1.5 1.5 0 0 1 5 2.5Z M6.5 7h5 M6.5 10h5 M6.5 13h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Care plan</h2><span class="card__aside" id="plan-count">Step 2 of 3</span></div>
+            <div class="bar"><span id="plan-fill"></span></div>
+            <div class="steps">
+              <div class="step"><i class="is-done"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Follow-up visit<em>Apr 28</em></div>
+              <div class="step"><i><span id="step-2-on"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></i>Lab review<em>May 12</em></div>
+              <div class="step"><i></i>Plan review<em>Jun 2</em></div>
+            </div>
+          </section>
+
+          <section class="card" id="k-team">
+            <div class="who"><i class="ava">SK</i><span><b>Dr. Sarah Kim</b><span>Cardiology &middot; Primary physician</span></span></div>
+          </section>
+        </div>
+      </div>
+
+      <header id="cx-head" class="glass" data-layout-allow-overlap data-layout-allow-occlusion>
+        <div class="head__row">
+          <span class="head__ava"><img src="assets/patient-photo.jpg" alt="" /></span>
+          <span class="head__txt"><b>Alex Morgan</b><span>PT-184203 &middot; 34 years</span></span>
+          <span class="pill pill--flag">Penicillin</span>
+        </div>
+      </header>
+
+      <span id="cx-bar"></span>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Scroll stops (points): photo 0 → summary 700 → end 912 (content 1756 tall in an 844 screen).
+    // The photo moves at 55% of the scroll speed for depth; the indicator thumb travels 374 pt over 912 pt.
+    const MAX = 912;
+    const thumb = (s) => (s / MAX) * 374;
+
+    // resting state: the photo, full screen
+    tl.fromTo("#cx-scroll", { y: 0 }, { y: 0, duration: 0.01 }, 0);
+    tl.fromTo("#cx-photo", { y: 0 }, { y: 0, duration: 0.01 }, 0);
+    tl.fromTo("#cx-bar", { y: 0, opacity: 0 }, { y: 0, opacity: 0, duration: 0.01 }, 0);
+    tl.fromTo("#cx-head", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 0);
+    tl.fromTo("#cx-intro", { opacity: 1, y: 0 }, { opacity: 1, y: 0, duration: 0.01 }, 0);
+    tl.fromTo("#ma-ok, #mb-ok", { opacity: 0, x: 6 }, { opacity: 0, x: 6, duration: 0.01 }, 0);
+    tl.fromTo("#ma-due, #mb-due", { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
+    tl.fromTo("#plan-fill", { scaleX: 1 / 3, transformOrigin: "0% 50%" }, { scaleX: 1 / 3, duration: 0.01 }, 0);
+    tl.fromTo("#step-2-on", { opacity: 0, scale: 0.4 }, { opacity: 0, scale: 0.4, duration: 0.01 }, 0);
+
+    const scroll = (at, from, to, dur) => {
+      tl.fromTo("#cx-scroll", { y: -from }, { y: -to, duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#cx-photo", { y: from * 0.45 }, { y: to * 0.45, duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#cx-bar", { y: thumb(from) }, { y: thumb(to), duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#cx-bar", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out", immediateRender: false }, at);
+      tl.fromTo("#cx-bar", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, at + dur + 0.45);
+    };
+
+    // ── 1.4 the record sheet rises over the photo ──
+    scroll(1.4, 0, 700, 1.6);
+    tl.fromTo("#cx-intro", { opacity: 1, y: 0 }, { opacity: 0, y: -16, duration: 0.5, ease: "power2.in", immediateRender: false }, 1.55);
+    tl.fromTo("#cx-head", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.out", immediateRender: false }, 2.45);
+
+    // ── 3.5 both medications reconciled ──
+    [["#ma-due", "#ma-ok"], ["#mb-due", "#mb-ok"]].forEach(([due, ok], i) => {
+      const at = 3.5 + i * 0.55;
+      tl.fromTo(due, { opacity: 1 }, { opacity: 0, duration: 0.15, ease: "power2.in", immediateRender: false }, at);
+      tl.fromTo(ok, { opacity: 0, x: 6 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, at + 0.08);
+    });
+
+    // ── 5.0 on to the care plan; the lab review is done ──
+    scroll(5.0, 700, MAX, 1.3);
+    tl.fromTo("#step-2-on", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, 6.8);
+    tl.fromTo("#plan-fill", { scaleX: 1 / 3 }, { scaleX: 2 / 3, duration: 0.7, ease: "power3.inOut", immediateRender: false }, 6.9);
+
+    // ── 9.0 back up to the photo ──
+    scroll(9.0, MAX, 0, 1.9);
+    tl.fromTo("#cx-head", { opacity: 1 }, { opacity: 0, duration: 0.4, ease: "power2.in", immediateRender: false }, 9.9);
+    tl.fromTo("#cx-intro", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out", immediateRender: false }, 10.45);
+
+    // record states reset while the sheet is below the fold, so the loop starts clean
+    tl.fromTo("#ma-ok, #mb-ok", { opacity: 1, x: 0 }, { opacity: 0, x: 6, duration: 0.01, immediateRender: false }, 11.4);
+    tl.fromTo("#ma-due, #mb-due", { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: false }, 11.4);
+    tl.fromTo("#step-2-on", { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.4, duration: 0.01, immediateRender: false }, 11.4);
+    tl.fromTo("#plan-fill", { scaleX: 2 / 3 }, { scaleX: 1 / 3, duration: 0.01, immediateRender: false }, 11.4);
+
+    window.__timelines["context"] = tl;
+  </script>
+</template>

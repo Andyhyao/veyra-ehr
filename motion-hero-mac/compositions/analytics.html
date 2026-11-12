@@ -1,0 +1,496 @@
+<template>
+  <style>
+    /* Laid out to match the screen baked into hero-macbook-analytics.webp, so the still image and frame 0 agree. */
+    #root {
+      position: absolute;
+      inset: 0;
+      background: #f1f5fa;
+      font-family: "Inter", sans-serif;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* sidebar */
+    #an-side {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 169px;
+      height: 630px;
+      background: #0c1426;
+    }
+    .an-brand {
+      position: absolute;
+      left: 18px;
+      top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+    }
+    .an-brand svg {
+      width: 15px;
+      height: 14px;
+    }
+    .an-nav {
+      position: absolute;
+      left: 12px;
+      top: 62px;
+      width: 145px;
+    }
+    .an-nav span {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 28px;
+      margin-bottom: 6px;
+      padding: 0 11px;
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #9fb0cc;
+    }
+    .an-nav span.is-on {
+      background: #2563eb;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .an-nav svg {
+      width: 13px;
+      height: 13px;
+      flex: none;
+    }
+    .an-foot {
+      position: absolute;
+      left: 16px;
+      bottom: 22px;
+      width: 145px;
+      font-size: 7px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      line-height: 1.5;
+      color: #9aa9c0;
+    }
+
+    /* page head */
+    .an-title {
+      position: absolute;
+      left: 191px;
+      top: 26px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .an-range {
+      position: absolute;
+      right: 22px;
+      top: 24px;
+      height: 25px;
+      padding: 0 14px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #e2e8f0;
+      border-radius: 99px;
+      background: #ffffff;
+      font-size: 10px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    /* kpis */
+    .an-kpi {
+      position: absolute;
+      top: 66px;
+      width: 180px;
+      height: 86px;
+      padding: 14px 15px;
+      background: #ffffff;
+      border: 1px solid #e8eef6;
+      border-radius: 13px;
+    }
+    .an-kpi p {
+      font-size: 10px;
+      font-weight: 600;
+      color: #5b6b85;
+    }
+    .num {
+      display: flex;
+      margin-top: 9px;
+      height: 28px;
+      font-size: 24px;
+      line-height: 28px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #0f172a;
+      font-variant-numeric: tabular-nums;
+    }
+    .odo {
+      display: inline-block;
+      height: 28px;
+      overflow: hidden;
+    }
+    .odo__c {
+      display: block;
+    }
+    .odo i {
+      display: block;
+      height: 28px;
+      font-style: normal;
+    }
+    .an-delta {
+      margin-top: 4px;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #15a34a;
+    }
+    .an-delta.is-down {
+      color: #2563eb;
+    }
+
+    /* panels */
+    .an-card {
+      position: absolute;
+      top: 166px;
+      height: 442px;
+      background: #ffffff;
+      border: 1px solid #e8eef6;
+      border-radius: 14px;
+    }
+    .an-card h3 {
+      position: absolute;
+      left: 18px;
+      top: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* visits by type */
+    #an-donut {
+      position: absolute;
+      left: 61px;
+      top: 54px;
+      width: 120px;
+      height: 120px;
+    }
+    .lg-row {
+      position: absolute;
+      left: 18px;
+      width: 207px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 10.5px;
+      color: #475569;
+    }
+    .lg-row i {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex: none;
+    }
+    .lg-row b {
+      margin-left: auto;
+      font-size: 10.5px;
+      color: #0f172a;
+    }
+    .lg-hit {
+      position: absolute;
+      left: 10px;
+      width: 223px;
+      height: 26px;
+      border-radius: 8px;
+      background: #eef4ff;
+    }
+
+    /* department performance */
+    .bar-g {
+      position: absolute;
+      left: 18px;
+      width: 208px;
+    }
+    .bar-g p {
+      font-size: 10px;
+      font-weight: 600;
+      color: #5b6b85;
+      margin-bottom: 6px;
+    }
+    .bar {
+      position: relative;
+      height: 22px;
+      border-radius: 7px;
+      background: #edf1f8;
+      overflow: hidden;
+    }
+    .bar span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 22px;
+      border-radius: 7px;
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+    }
+    .bar b {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      height: 22px;
+      line-height: 22px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* quality measures */
+    .q-row {
+      position: absolute;
+      left: 18px;
+      width: 208px;
+      height: 62px;
+      padding: 11px 13px;
+      border: 1px solid #edf1f8;
+      border-radius: 12px;
+    }
+    .q-row b {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    .q-row span {
+      display: block;
+      margin-top: 3px;
+      font-size: 9.5px;
+      color: #5b6b85;
+    }
+    .an-note {
+      position: absolute;
+      left: 18px;
+      bottom: 16px;
+      width: 208px;
+      font-size: 9px;
+      line-height: 1.5;
+      color: #5b6b85;
+    }
+
+    /* hover readout on the bars */
+    #rd {
+      position: absolute;
+      right: 14px;
+      top: 72px;
+      width: 96px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #ffffff;
+      box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.6);
+    }
+    .rd-mask {
+      height: 28px;
+      overflow: hidden;
+    }
+    .rd-entry {
+      height: 28px;
+    }
+    .rd-entry span {
+      display: block;
+      font-size: 8.5px;
+      line-height: 11px;
+      color: #b4c0d3;
+    }
+    .rd-entry b {
+      display: block;
+      font-size: 12px;
+      line-height: 17px;
+    }
+
+    /* toast */
+    #an-toast {
+      position: absolute;
+      left: 178px;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      height: 38px;
+      padding: 0 14px 0 10px;
+      border-radius: 10px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 600;
+      box-shadow: 0 14px 28px -14px rgba(15, 23, 42, 0.6);
+    }
+    .toast__ok {
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #16a34a;
+    }
+    .toast__ok svg {
+      width: 10px;
+      height: 10px;
+    }
+    #an-toast em {
+      font-style: normal;
+      font-weight: 500;
+      color: #b4c0d3;
+    }
+  </style>
+
+  <div id="root" data-composition-id="analytics" data-width="966" data-height="630">
+    <aside id="an-side">
+      <span class="an-brand"><svg viewBox="0 0 24 22" fill="none" aria-hidden="true"><path d="M1 1h6l5.5 13L18 1h5l-8.5 20h-4z" fill="#ffffff"/></svg>veyra</span>
+      <nav class="an-nav">
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="4" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="13" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/><rect x="13" y="13" width="7" height="7" rx="2" stroke="currentColor" stroke-width="1.8"/></svg>Dashboard</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.4-3.4 4-5 7-5s5.6 1.6 7 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Patients</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3" stroke="currentColor" stroke-width="1.7"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Appointments</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12.5c0 3.6-3.6 6.5-8 6.5-1 0-2-.2-2.9-.5L5 20l1.2-3.1C4.8 15.8 4 14.2 4 12.5 4 8.9 7.6 6 12 6s8 2.9 8 6.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Messages</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="6" r="2.6" stroke="currentColor" stroke-width="1.7"/><circle cx="5" cy="17" r="2.6" stroke="currentColor" stroke-width="1.7"/><circle cx="19" cy="17" r="2.6" stroke="currentColor" stroke-width="1.7"/><path d="M10.2 7.8 6.6 14.6M13.8 7.8l3.6 6.8M7.6 17h8.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Care team</span>
+        <span class="is-on"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 19v-6M12 19V5M19 19v-9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>Analytics</span>
+        <span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v2.5M12 18.5V21M21 12h-2.5M5.5 12H3M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8M18.4 18.4l-1.8-1.8M7.4 7.4 5.6 5.6" stroke="currentColor" stroke-width="1.7"/></svg>Settings</span>
+      </nav>
+      <p class="an-foot">DEMO BUILD &middot; FICTIONAL DATA</p>
+    </aside>
+
+    <h1 class="an-title">Practice analytics</h1>
+    <span class="an-range">Last 30 days</span>
+
+    <div class="an-kpi" style="left: 191px">
+      <p>Patients</p>
+      <div class="num" data-layout-ignore>
+        <span>32</span><span class="odo"><span id="k1" class="odo__c"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span>
+      </div>
+      <p class="an-delta">&uarr; 12%</p>
+    </div>
+    <div class="an-kpi" style="left: 382px">
+      <p>Visit completion</p>
+      <div class="num" data-layout-ignore>
+        <span>9</span><span class="odo"><span id="k2" class="odo__c"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span><span>%</span>
+      </div>
+      <p class="an-delta">&uarr; 4%</p>
+    </div>
+    <div class="an-kpi" style="left: 573px">
+      <p>Active patients</p>
+      <div class="num" data-layout-ignore>
+        <span>1,24</span><span class="odo"><span id="k3" class="odo__c"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span>
+      </div>
+      <p class="an-delta">&uarr; 10%</p>
+    </div>
+    <div class="an-kpi" style="left: 764px">
+      <p>Avg. wait time</p>
+      <div class="num" data-layout-ignore>
+        <span>1</span><span class="odo"><span id="k4" class="odo__c"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i></span></span><span>&nbsp;min</span>
+      </div>
+      <p class="an-delta is-down">&darr; 20%</p>
+    </div>
+
+    <section class="an-card" style="left: 191px; width: 243px">
+      <h3>Visits by type</h3>
+      <svg id="an-donut" viewBox="0 0 42 42" aria-hidden="true">
+        <g transform="rotate(-90 21 21)">
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="#e8eef7" stroke-width="7" />
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2563eb" stroke-width="7" stroke-dasharray="45 55" stroke-dashoffset="25" />
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="#60a5fa" stroke-width="7" stroke-dasharray="20 80" stroke-dashoffset="80" />
+          <circle cx="21" cy="21" r="15.9" fill="none" stroke="#a7c7fe" stroke-width="7" stroke-dasharray="15 85" stroke-dashoffset="60" />
+        </g>
+      </svg>
+      <span id="lg-hit" class="lg-hit" style="top: 206px"></span>
+      <div class="lg-row" style="top: 206px"><i style="background: #2563eb"></i>Follow-up visit<b>45%</b></div>
+      <div class="lg-row" style="top: 240px"><i style="background: #60a5fa"></i>Annual exam<b>20%</b></div>
+      <div class="lg-row" style="top: 274px"><i style="background: #a7c7fe"></i>Consultation<b>15%</b></div>
+      <div class="lg-row" style="top: 308px"><i style="background: #e8eef7"></i>Other<b>20%</b></div>
+    </section>
+
+    <section class="an-card" style="left: 445px; width: 244px">
+      <h3>Department performance</h3>
+      <div class="bar-g" style="top: 58px"><p>General</p><div class="bar"><span style="width: 208px"></span><b>420</b></div></div>
+      <div class="bar-g" style="top: 120px"><p>Cardiology</p><div class="bar"><span style="width: 158px"></span><b>320</b></div></div>
+      <div class="bar-g" style="top: 182px"><p>Pediatrics</p><div class="bar"><span style="width: 100px"></span><b>200</b></div></div>
+      <div class="bar-g" style="top: 244px"><p>Dermatology</p><div class="bar"><span style="width: 89px"></span><b>180</b></div></div>
+      <div id="rd" data-layout-allow-overlap>
+        <div class="rd-mask" data-layout-ignore>
+          <div id="rd-roll">
+            <p class="rd-entry"><span>General</span><b>420 visits</b></p>
+            <p class="rd-entry"><span>Cardiology</span><b>320 visits</b></p>
+            <p class="rd-entry"><span>Pediatrics</span><b>200 visits</b></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="an-card" style="left: 700px; width: 244px">
+      <h3>Quality measures</h3>
+      <div class="q-row" style="top: 56px"><b>BP control</b><span>Target 80% &middot; tracking 76%</span></div>
+      <div class="q-row" style="top: 130px"><b>Diabetes HbA1c</b><span>Target 75% &middot; tracking 71%</span></div>
+      <div class="q-row" style="top: 204px"><b>Preventive screening</b><span>Target 90% &middot; tracking 88%</span></div>
+      <div class="q-row" style="top: 278px"><b>Medication review</b><span>Target 85% &middot; tracking 82%</span></div>
+      <p class="an-note">Figures are illustrative targets, not measured results.</p>
+    </section>
+
+    <div id="an-toast" data-layout-allow-overlap><span class="toast__ok"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Visit completed <em>&middot; Demo patient</em></div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Each odometer column holds 0–9, so digit d sits at yPercent -10·d.
+    const at = (d) => -10 * d;
+    // resting digits = the numbers baked into the still: 324 · 96% · 1,243 · 18 min
+    const START = { "#k1": 4, "#k2": 6, "#k3": 3, "#k4": 8 };
+    // the readout parks beside each bar: General, Cardiology, Pediatrics
+    const RD_Y = [0, 62, 124];
+
+    // resting state = the still image
+    Object.entries(START).forEach(([id, d]) => tl.fromTo(id, { yPercent: at(d) }, { yPercent: at(d), duration: 0.01 }, 0));
+    tl.fromTo("#rd", { opacity: 0, y: RD_Y[0] }, { opacity: 0, y: RD_Y[0], duration: 0.01 }, 0);
+    tl.fromTo("#rd-roll", { yPercent: 0 }, { yPercent: 0, duration: 0.01 }, 0);
+    tl.fromTo("#lg-hit", { opacity: 0, y: 0 }, { opacity: 0, y: 0, duration: 0.01 }, 0);
+    tl.fromTo("#an-toast", { opacity: 0, x: 24 }, { opacity: 0, x: 24, duration: 0.01 }, 0);
+    tl.fromTo(".num", { opacity: 1, filter: "blur(0px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.01 }, 0);
+
+    const roll = (id, from, to, t) =>
+      tl.fromTo(id, { yPercent: at(from) }, { yPercent: at(to), duration: 0.6, ease: "power3.inOut", immediateRender: false }, t);
+
+    // ── 1.0 the readout walks the department bars ──
+    tl.fromTo("#rd", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out", immediateRender: false }, 1.0);
+    tl.fromTo("#rd", { y: RD_Y[0] }, { y: RD_Y[1], duration: 0.6, ease: "power3.inOut", immediateRender: false }, 2.4);
+    tl.fromTo("#rd-roll", { yPercent: 0 }, { yPercent: -100 / 3, duration: 0.45, ease: "power3.inOut", immediateRender: false }, 2.45);
+    tl.fromTo("#rd", { y: RD_Y[1] }, { y: RD_Y[2], duration: 0.6, ease: "power3.inOut", immediateRender: false }, 3.8);
+    tl.fromTo("#rd-roll", { yPercent: -100 / 3 }, { yPercent: -200 / 3, duration: 0.45, ease: "power3.inOut", immediateRender: false }, 3.85);
+    tl.fromTo("#rd", { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power2.in", immediateRender: false }, 7.2);
+
+    // ── 1.3 the visit-type legend highlights in turn ──
+    tl.fromTo("#lg-hit", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.out", immediateRender: false }, 1.3);
+    tl.fromTo("#lg-hit", { y: 0 }, { y: 34, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 3.0);
+    tl.fromTo("#lg-hit", { y: 34 }, { y: 68, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 5.0);
+    tl.fromTo("#lg-hit", { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power2.in", immediateRender: false }, 6.8);
+
+    // ── 1.9 a patient is added to the panel ──
+    roll("#k1", 4, 5, 1.9);
+
+    // ── 4.4 a visit completes ──
+    roll("#k2", 6, 7, 4.4);
+    tl.fromTo("#an-toast", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out", immediateRender: false }, 4.6);
+    tl.fromTo("#an-toast", { opacity: 1, x: 0 }, { opacity: 0, x: 12, duration: 0.2, ease: "power2.in", immediateRender: false }, 6.9);
+
+    // ── 5.8 the active panel grows, and the wait comes down ──
+    roll("#k3", 3, 4, 5.8);
+    roll("#k4", 8, 7, 6.4);
+
+    // ── 8.7 the numbers settle back to the still's, so the loop starts clean ──
+    tl.fromTo(".num", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(4px)", duration: 0.2, ease: "power2.in", immediateRender: false }, 8.7);
+    tl.fromTo("#k1", { yPercent: at(5) }, { yPercent: at(4), duration: 0.01, immediateRender: false }, 8.92);
+    tl.fromTo("#k2", { yPercent: at(7) }, { yPercent: at(6), duration: 0.01, immediateRender: false }, 8.92);
+    tl.fromTo("#k3", { yPercent: at(4) }, { yPercent: at(3), duration: 0.01, immediateRender: false }, 8.92);
+    tl.fromTo("#k4", { yPercent: at(7) }, { yPercent: at(8), duration: 0.01, immediateRender: false }, 8.92);
+    tl.fromTo(".num", { opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false }, 8.95);
+
+    window.__timelines["analytics"] = tl;
+  </script>
+</template>

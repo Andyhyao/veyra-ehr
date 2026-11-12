@@ -1,0 +1,16 @@
+{
+  "name": "veyra-landing",
+  "private": true,
+  "description": "Build tooling only: the site itself is static. Run these after editing markup classes or upgrading Motion or Lenis.",
+  "scripts": {
+    "build:css": "tailwindcss -i assets/css/tw.src.css -o assets/css/tw.css --minify",
+    "vendor:motion": "cp node_modules/motion/dist/motion.js assets/js/vendor/motion.js",
+    "vendor:lenis": "cp node_modules/lenis/dist/lenis.min.js assets/js/vendor/lenis.js && cp node_modules/lenis/dist/lenis.css assets/css/lenis.css"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "lenis": "1.3.26",
+    "motion": "13.5.1",
+    "tailwindcss": "4.3.3"
+  }
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"accent","type":"color","label":"Accent","default":"#2563EB"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1210, height=834" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      /* Veyra palette. The canvas is the screen cutout of the device frame (assets/device-frame.png): 1210 × 834, inset 55 / 53. */
+      :root {
+        --accent: #2563eb;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1210px;
+        height: 834px;
+        overflow: hidden;
+        background: #f6f8fc;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-glrh"
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="10"
+      data-width="1210"
+      data-height="834"
+    >
+      <div data-hf-id="hf-lqts"
+        id="dashboard"
+        data-composition-id="dashboard"
+        data-composition-src="compositions/dashboard.html"
+        data-start="0"
+        data-duration="10"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1210"
+        data-height="834"
+      ></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

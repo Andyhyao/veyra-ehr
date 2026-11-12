@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veyra — Smarter Records. Healthier Care.</title>
+<meta name="description" content="Veyra streamlines medical data management with user-friendly interfaces, enabling healthcare professionals to access, update, and monitor patient records efficiently.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#2563EB">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js")</script>
+<link rel="stylesheet" href="assets/css/style.css?v=38">
+<link rel="stylesheet" href="assets/css/tw.css?v=2">
+<link rel="stylesheet" href="assets/css/lenis.css?v=1.3.26">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ───────────────────────────── header ───────────────────────────── -->
+<header class="hdr" id="hdr">
+  <div class="shell hdr__in">
+    <a class="hdr__logo" href="#top" aria-label="Veyra home">
+      <img src="assets/img/veyra-logo.svg" alt="Veyra" width="148" height="47">
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <ul class="nav__list">
+        <li class="nav__item has-menu">
+          <button class="nav__link" aria-expanded="false" aria-controls="m-product">Product <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="menu" id="m-product" hidden>
+            <div class="menu__grid">
+              <a class="menu__card" href="#product">
+                <span class="menu__ico" data-ico="chart"></span>
+                <span><strong>Charting</strong>Notes, orders and results in one timeline.</span>
+              </a>
+              <a class="menu__card" href="#platform" data-plat-tab="appointments">
+                <span class="menu__ico" data-ico="calendar"></span>
+                <span><strong>Scheduling</strong>Rooms, providers and recalls that stay in sync.</span>
+              </a>
+              <a class="menu__card" href="#product" data-record-open="meds">
+                <span class="menu__ico" data-ico="pill"></span>
+                <span><strong>e-Prescribing</strong>Plans, refills and interaction checks.</span>
+              </a>
+              <a class="menu__card" href="#platform" data-plat-tab="analytics">
+                <span class="menu__ico" data-ico="pulse"></span>
+                <span><strong>Analytics</strong>Live operational and quality measures.</span>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item has-menu">
+          <button class="nav__link" aria-expanded="false" aria-controls="m-solutions">Solutions <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="menu menu--sm" id="m-solutions" hidden>
+            <div class="menu__list">
+              <a href="#product">Primary care</a>
+              <a href="#platform">Specialty clinics</a>
+              <a href="#workflow">Multi-site groups</a>
+              <a href="#security">Behavioral health</a>
+            </div>
+          </div>
+        </li>
+        <li class="nav__item has-menu">
+          <button class="nav__link" aria-expanded="false" aria-controls="m-res">Resources <svg class="chev" viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5 6 6.5l5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="menu menu--sm" id="m-res" hidden>
+            <div class="menu__list">
+              <a href="#security">Security &amp; compliance</a>
+              <a href="#workflow">Implementation guide</a>
+              <a href="#showcase">In practice</a>
+              <a href="#trust-proof">Why trust Veyra</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="hdr__right">
+      <button class="iconbtn" aria-label="Search">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="m13.6 13.6 3.4 3.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      </button>
+      <a class="btn btn--ghost tw:press" data-press href="404.html">Log in</a>
+      <a class="btn btn--primary tw:press" data-press href="#demo">Request a demo <svg class="arr" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="mobile" aria-label="Open menu"><span></span><span></span></button>
+    </div>
+  </div>
+
+  <div class="mobile" id="mobile" hidden>
+    <a href="#product">Product</a><a href="#platform">Solutions</a><a href="#security">Resources</a><a href="#showcase">In practice</a>
+    <div class="mobile__cta"><a class="btn btn--ghost tw:press" data-press href="404.html">Log in</a><a class="btn btn--primary tw:press" data-press href="#demo">Request a demo</a></div>
+  </div>
+</header>
+
+<main id="main">
+<!-- ───────────────────────────── hero ───────────────────────────── -->
+<section class="hero" id="top">
+  <div class="hero__bg" aria-hidden="true">
+    <svg class="hero__waves" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="wv" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2563EB" stop-opacity=".30"/>
+          <stop offset="1" stop-color="#2563EB" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#wv)" stroke-width="1.5">
+        <path d="M-200 300C180 140 420 540 760 420s560-420 1120-300"/>
+        <path d="M-200 420C180 260 420 660 760 540s560-420 1120-300"/>
+        <path d="M-200 540C180 380 420 780 760 660s560-420 1120-300"/>
+        <path d="M-200 700C240 600 520 880 900 790s520-300 940-210"/>
+      </g>
+    </svg>
+    <span class="blob blob--a"></span><span class="blob blob--b"></span>
+  </div>
+
+  <div class="shell hero__in" data-stagger="load">
+    <div class="hero__copy">
+      <p class="eyebrow tw:js:motion-safe:opacity-0" data-stagger-item>01. EHR Platform</p>
+      <h1 class="hero__h1 tw:js:motion-safe:opacity-0" data-stagger-item data-split>Smarter Records.<br><span class="grad">Healthier Care.</span></h1>
+      <p class="hero__sub tw:js:motion-safe:opacity-0" data-stagger-item>Veyra streamlines medical data management with user-friendly interfaces, enabling healthcare professionals to access, update, and monitor patient records efficiently.</p>
+      <div class="hero__cta tw:js:motion-safe:opacity-0" data-stagger-item>
+        <a class="btn btn--primary btn--lg tw:press" data-press href="#demo">Request a demo <svg class="arr" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <!-- Watch video: parked until there is a video to point it at. Uncomment to restore;
+             its .btn--outline and .play rules are still in style.css.
+        <a class="btn btn--outline btn--lg tw:press" data-press href="#showcase"><span class="play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M1 1v10l8-5z" fill="currentColor"/></svg></span> Watch video</a>
+        -->
+      </div>
+
+      <ul class="pillars tw:js:motion-safe:opacity-0" data-stagger-item>
+        <li><span class="pillars__ico" data-ico="records"></span>Centralized<br>Patient&nbsp;Records</li>
+        <li><span class="pillars__ico" data-ico="team"></span>Better Care<br>Collaboration</li>
+        <li><span class="pillars__ico" data-ico="bars"></span>Real-time<br>Insights</li>
+        <li><span class="pillars__ico" data-ico="shield"></span>Security<br>by design</li>
+      </ul>
+    </div>
+
+    <!-- device composition -->
+    <div class="stage tw:js:motion-safe:opacity-0" data-stagger-item aria-label="Veyra product preview">
+      <div class="stage__mac">
+        <img class="stage__img" src="assets/img/hero-macbook-analytics.webp" width="2000" height="1208"
+             alt="The Veyra practice analytics screen open on a laptop, showing demo clinic data">
+        <video class="stage__screen" muted loop playsinline preload="none" width="966" height="630" aria-hidden="true">
+          <source src="assets/video/hero-mac.webm?v=2" type="video/webm">
+          <source src="assets/video/hero-mac.mp4?v=2" type="video/mp4">
+        </video>
+        <svg class="stage__notch" viewBox="0 0 127 20" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0H127C124.8 0 123 1.8 123 4V13.5C123 17.1 120.1 20 116.5 20H10.5C6.9 20 4 17.1 4 13.5V4C4 1.8 2.2 0 0 0Z" fill="#000"/></svg>
+      </div>
+
+      <div class="stage__phone">
+        <img class="stage__img" src="assets/img/hero-iphone.png" width="450" height="920"
+             alt="The Veyra site at phone width, with the hero stacked for a small screen">
+        <span class="stage__glass" aria-hidden="true"></span>
+        <video class="stage__screen" muted loop playsinline preload="none" width="402" height="874" aria-hidden="true">
+          <source src="assets/video/hero-phone.webm" type="video/webm">
+          <source src="assets/video/hero-phone.mp4" type="video/mp4">
+        </video>
+        <span class="stage__island" aria-hidden="true"></span>
+      </div>
+
+      <div class="floats" aria-hidden="true">
+        <div class="float"><strong data-count="324">0</strong><span>Patients</span><em class="up">↑ 12%</em></div>
+        <div class="float"><strong data-count="112">0</strong><span>Appointments</span><em class="up">↑ 8%</em></div>
+        <div class="float"><strong data-count="96" data-suffix="%">0</strong><span>Visit completion</span><em class="up">↑ 4%</em></div>
+        <div class="float"><strong data-count="1243">0</strong><span>Active patients</span><em class="up">↑ 10%</em></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────── trust ───────────────────────────── -->
+<section class="trust" data-stagger>
+  <div class="shell">
+    <p class="trust__lead tw:js:motion-safe:opacity-0" data-stagger-item>Example clinic profiles — every organization named here is fictional</p>
+    <div class="trust__row tw:js:motion-safe:opacity-0" data-stagger-item>
+      <div class="marquee">
+        <ul class="marquee__group" aria-label="Fictional example organizations"><li>Northline Health</li><li>Carewell Clinics</li><li>Meridian Medical</li><li>Bayview Family Care</li><li>Oakhurst Group</li><li>Linden Pediatrics</li></ul>
+        <ul class="marquee__group" aria-hidden="true"><li>Northline Health</li><li>Carewell Clinics</li><li>Meridian Medical</li><li>Bayview Family Care</li><li>Oakhurst Group</li><li>Linden Pediatrics</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────── product ───────────────────────────── -->
+<section class="sec sec--wash" id="product">
+  <div class="shell record-split" data-stagger>
+
+    <div class="record-copy">
+      <p class="eyebrow tw:js:motion-safe:opacity-0" data-stagger-item>02. The record model</p>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>The record is<br><span>the argument.</span></h2>
+      <p class="sec__sub sec__sub--left tw:js:motion-safe:opacity-0" data-stagger-item>Charting, scheduling, prescribing and billing write to one patient timeline. Everything else in Veyra is a view onto it.</p>
+
+      <div class="record-points">
+        <div class="record-point tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+          <span class="record-point__ico" data-ico="records"></span>
+          <div>
+            <h3>One longitudinal chart</h3>
+            <p>Notes, labs, imaging and medications in a single scrollable history.</p>
+          </div>
+        </div>
+        <div class="record-point tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+          <span class="record-point__ico" data-ico="team"></span>
+          <div>
+            <h3>Care that stays coordinated</h3>
+            <p>Tasks, messages and referrals attach to the chart they belong to.</p>
+          </div>
+        </div>
+        <div class="record-point tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+          <span class="record-point__ico" data-ico="bars"></span>
+          <div>
+            <h3>Insight without exports</h3>
+            <p>Panel and operational metrics read the same data, live.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="record-panel tw:js:motion-safe:opacity-0" data-stagger-item>
+      <div class="record-panel__head">
+        <i class="ava ava--4" aria-hidden="true">AM</i>
+        <div class="record-panel__id">
+          <b>Alex Morgan</b><span>ID PT-184203 &middot; 34 years</span>
+        </div>
+        <span class="pill">Demo data</span>
+      </div>
+
+      <div class="record-tabs" role="group" aria-label="Record view">
+        <button type="button" class="record-tab is-on" data-record-tab="history" aria-pressed="true">History</button>
+        <button type="button" class="record-tab" data-record-tab="labs" aria-pressed="false">Lab results</button>
+        <button type="button" class="record-tab" data-record-tab="meds" aria-pressed="false">Medications</button>
+      </div>
+
+      <ul class="record-rows" id="record-rows" aria-live="polite">
+        <li class="record-row"><b>Apr 28, 2026 &middot; Routine follow-up</b><span>Blood pressure stable. Continue current plan.</span></li>
+        <li class="record-row"><b>Mar 12, 2026 &middot; Annual exam</b><span>Labs reviewed. No concerns noted.</span></li>
+        <li class="record-row"><b>Jan 18, 2026 &middot; Blood pressure check</b><span>Within target range.</span></li>
+      </ul>
+
+      <p class="record-note">Illustrative interface. Patient and clinical values are fictional.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ───────────────────────────── platform ───────────────────────────── -->
+<section class="sec" id="platform">
+  <div class="shell">
+    <header class="sec__head" data-stagger>
+      <p class="eyebrow tw:js:motion-safe:opacity-0" data-stagger-item>03. The platform</p>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>Seven screens, one record.</h2>
+      <p class="sec__sub tw:js:motion-safe:opacity-0" data-stagger-item>Every menu below opens the working surface behind it. Move through the sidebar the way a clinician would on a Tuesday morning.</p>
+    </header>
+
+    <div class="plat tw:js:motion-safe:opacity-0" data-stagger data-stagger-item>
+      <div class="plat-side">
+        <div class="plat-side__brand"><img src="assets/img/veyra-mark-white.svg" alt="" width="20" height="18"><span>veyra</span></div>
+        <div class="plat-nav" role="tablist" aria-orientation="vertical" aria-label="Veyra platform sections">
+          <button type="button" role="tab" class="plat-nav__item is-on" id="plat-tab-overview" aria-controls="plat-panel-overview" aria-selected="true" tabindex="0"><i data-ico="grid" aria-hidden="true"></i>Dashboard</button>
+          <button type="button" role="tab" class="plat-nav__item" id="plat-tab-patients" aria-controls="plat-panel-patients" aria-selected="false" tabindex="-1"><i data-ico="user" aria-hidden="true"></i>Patients</button>
+          <button type="button" role="tab" class="plat-nav__item" id="plat-tab-appointments" aria-controls="plat-panel-appointments" aria-selected="false" tabindex="-1"><i data-ico="calendar" aria-hidden="true"></i>Appointments</button>
+          <button type="button" role="tab" class="plat-nav__item" id="plat-tab-messages" aria-controls="plat-panel-messages" aria-selected="false" tabindex="-1"><i data-ico="chat" aria-hidden="true"></i>Messages</button>
+          <button type="button" role="tab" class="plat-nav__item" id="plat-tab-careteam" aria-controls="plat-panel-careteam" aria-selected="false" tabindex="-1"><i data-ico="team" aria-hidden="true"></i>Care team</button>
+          <button type="button" role="tab" class="plat-nav__item" id="plat-tab-analytics" aria-controls="plat-panel-analytics" aria-selected="false" tabindex="-1"><i data-ico="bars" aria-hidden="true"></i>Analytics</button>
+          <button type="button" role="tab" class="plat-nav__item" id="plat-tab-settings" aria-controls="plat-panel-settings" aria-selected="false" tabindex="-1"><i data-ico="gear" aria-hidden="true"></i>Settings</button>
+        </div>
+        <p class="plat-side__note">Demo build &middot; fictional data</p>
+      </div>
+
+      <div class="plat-main">
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-overview" aria-labelledby="plat-tab-overview" tabindex="0">
+          <div class="plat-head"><h3>Clinic overview</h3><span class="plat-chip">Last 30 days</span></div>
+          <div class="plat-kpis">
+            <div class="plat-kpi"><span>Patients</span><strong>324</strong><em class="up">&uarr; 12%</em></div>
+            <div class="plat-kpi"><span>Visit completion</span><strong>96%</strong><em class="up">&uarr; 4%</em></div>
+            <div class="plat-kpi"><span>Active patients</span><strong>1,243</strong><em class="up">&uarr; 10%</em></div>
+            <div class="plat-kpi"><span>Avg. wait time</span><strong>18 min</strong><em class="down">&darr; 20%</em></div>
+          </div>
+          <div class="plat-cols">
+            <div class="plat-card">
+              <h4>Appointments trend</h4>
+              <svg class="plat-line" viewBox="0 0 320 130" preserveAspectRatio="none" role="img" aria-label="Appointments rose through April, from about 20 a day to about 70">
+                <g stroke="#E8EEF7" stroke-width="1"><path d="M0 32h320"/><path d="M0 64h320"/><path d="M0 96h320"/></g>
+                <path d="M6 104 50 94 94 78 138 82 182 58 226 46 270 32 314 18" fill="none" stroke="#2563EB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <g fill="#fff" stroke="#2563EB" stroke-width="2.4"><circle cx="94" cy="78" r="3.6"/><circle cx="182" cy="58" r="3.6"/><circle cx="270" cy="32" r="3.6"/></g>
+              </svg>
+              <div class="plat-axis"><span>Apr 1</span><span>Apr 8</span><span>Apr 15</span><span>Apr 22</span><span>Apr 29</span></div>
+            </div>
+            <div class="plat-card">
+              <h4>Today&rsquo;s appointments</h4>
+              <ul class="plat-list">
+                <li><span class="plat-time">9:00 AM</span><i class="plat-ava ava--1" aria-hidden="true">SK</i><span class="plat-who"><b>Sarah Kim</b>Follow-up visit</span></li>
+                <li><span class="plat-time">10:00 AM</span><i class="plat-ava ava--2" aria-hidden="true">MT</i><span class="plat-who"><b>Michael Torres</b>Annual exam</span></li>
+                <li><span class="plat-time">11:00 AM</span><i class="plat-ava ava--3" aria-hidden="true">EC</i><span class="plat-who"><b>Emily Carter</b>Blood pressure check</span></li>
+                <li><span class="plat-time">1:30 PM</span><i class="plat-ava ava--5" aria-hidden="true">JW</i><span class="plat-who"><b>James Wong</b>Lab results review</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-patients" aria-labelledby="plat-tab-patients" tabindex="0" hidden>
+          <div class="plat-head"><h3>Patient overview</h3><span class="plat-chip">Demo record</span></div>
+          <div class="plat-patient">
+            <i class="plat-ava plat-ava--lg ava--4" aria-hidden="true">AM</i>
+            <div class="plat-patient__id"><b>Alex Morgan</b><span>ID PT-184203 &middot; 34 years &middot; Male</span></div>
+          </div>
+          <div class="plat-cols plat-cols--3">
+            <div class="plat-card">
+              <h4>Personal information</h4>
+              <dl class="plat-dl">
+                <dt>Date of birth</dt><dd>Apr 28, 1990</dd>
+                <dt>Phone</dt><dd>+1 (555) 123-4567</dd>
+                <dt>Email</dt><dd>alex.morgan@demo.com</dd>
+                <dt>Address</dt><dd>123 Health Ave, San Francisco, CA</dd>
+              </dl>
+            </div>
+            <div class="plat-card">
+              <h4>Key information</h4>
+              <dl class="plat-dl">
+                <dt>Blood type</dt><dd>O+</dd>
+                <dt>Allergies</dt><dd><span class="plat-flag">Penicillin</span></dd>
+                <dt>Chronic conditions</dt><dd>Hypertension</dd>
+                <dt>Primary physician</dt><dd>Dr. Sarah Kim</dd>
+              </dl>
+            </div>
+            <div class="plat-card">
+              <h4>Recent appointments</h4>
+              <ul class="plat-mini">
+                <li><b>Apr 28, 2026</b><span>Routine follow-up</span></li>
+                <li><b>Mar 12, 2026</b><span>Annual exam</span></li>
+                <li><b>Jan 18, 2026</b><span>Blood pressure check</span></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-appointments" aria-labelledby="plat-tab-appointments" tabindex="0" hidden>
+          <div class="plat-head">
+            <h3>Apr 27 &ndash; May 1, 2026</h3>
+            <div class="plat-seg" role="group" aria-label="Calendar range"><span class="is-on">Day</span><span>Week</span><span>Month</span></div>
+          </div>
+          <div class="plat-cols">
+            <div class="plat-card plat-card--flush">
+              <div class="plat-week">
+                <div class="plat-week__head"><span></span><span>Mon 27</span><span>Tue 28</span><span>Wed 29</span><span>Thu 30</span><span>Fri 1</span></div>
+                <div class="plat-week__row"><span class="plat-week__h">9:00</span><span><b class="plat-ev plat-ev--a">Sarah Kim<i>Follow-up</i></b></span><span></span><span><b class="plat-ev plat-ev--c">Cindy Carter<i>BP check</i></b></span><span></span><span></span></div>
+                <div class="plat-week__row"><span class="plat-week__h">10:00</span><span></span><span><b class="plat-ev plat-ev--b">Michael Torres<i>Annual exam</i></b></span><span></span><span></span><span><b class="plat-ev plat-ev--a">Lisa Tan<i>BP check</i></b></span></div>
+                <div class="plat-week__row"><span class="plat-week__h">11:00</span><span><b class="plat-ev plat-ev--d">Anna Heraidine<i>Treatment plan</i></b></span><span></span><span></span><span><b class="plat-ev plat-ev--b">James Wong<i>Lab results</i></b></span><span></span></div>
+                <div class="plat-week__row"><span class="plat-week__h">1:00</span><span></span><span></span><span><b class="plat-ev plat-ev--c">Robert Chen<i>Check-up</i></b></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="plat-card">
+              <h4>Appointment details</h4>
+              <div class="plat-patient plat-patient--sm"><i class="plat-ava ava--1" aria-hidden="true">AH</i><div class="plat-patient__id"><b>Anna Heraidine</b><span>ID PT-118431</span></div></div>
+              <dl class="plat-dl">
+                <dt>Date &amp; time</dt><dd>Apr 27, 2026 &middot; 11:00&ndash;11:30 AM</dd>
+                <dt>Type</dt><dd>Follow-up visit</dd>
+                <dt>Status</dt><dd><span class="plat-flag plat-flag--ok">Confirmed</span></dd>
+                <dt>Physician</dt><dd>Dr. Sarah Kim</dd>
+              </dl>
+              <div class="plat-actions"><span class="plat-btn">Reschedule</span><span class="plat-btn plat-btn--solid">Start visit</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-messages" aria-labelledby="plat-tab-messages" tabindex="0" hidden>
+          <div class="plat-head"><h3>Messages</h3><span class="plat-chip">3 unread</span></div>
+          <div class="plat-cols plat-cols--thread">
+            <div class="plat-card plat-card--flush">
+              <ul class="plat-threads">
+                <li class="is-on"><i class="plat-ava ava--2" aria-hidden="true">SK</i><span class="plat-who"><b>Dr. Sarah Kim</b>Cardiology</span></li>
+                <li><i class="plat-ava ava--3" aria-hidden="true">RP</i><span class="plat-who"><b>Rosa Pena, RN</b>Triage</span></li>
+                <li><i class="plat-ava ava--5" aria-hidden="true">DP</i><span class="plat-who"><b>David Park</b>Front desk</span></li>
+              </ul>
+            </div>
+            <div class="plat-card">
+              <h4>Dr. Sarah Kim &middot; Cardiology</h4>
+              <div class="plat-chat">
+                <p class="plat-bubble">Latest lab results for Anna Heraidine are ready for review.<time>9:41 AM</time></p>
+                <p class="plat-bubble plat-bubble--me">Reviewed. Let&rsquo;s continue the current care plan.<time>9:45 AM</time></p>
+                <p class="plat-bubble">Agreed &mdash; I&rsquo;ll note it in the chart.<time>9:46 AM</time></p>
+              </div>
+              <p class="plat-compose" aria-hidden="true">Type a message&hellip;</p>
+              <p class="plat-note">Messaging is illustrative; nothing is sent from this page.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-careteam" aria-labelledby="plat-tab-careteam" tabindex="0" hidden>
+          <div class="plat-head"><h3>Care team tasks</h3><span class="plat-chip">12 open</span></div>
+          <div class="plat-board">
+            <div class="plat-col">
+              <h4>To review <span>3</span></h4>
+              <div class="plat-task"><b>Review lab report</b><span>Alex Morgan</span></div>
+              <div class="plat-task"><b>Contact patient</b><span>Sarah Kim</span></div>
+              <div class="plat-task"><b>Schedule referral</b><span>Michael Torres</span></div>
+            </div>
+            <div class="plat-col">
+              <h4>In progress <span>4</span></h4>
+              <div class="plat-task"><b>Update visit notes</b><span>Emily Carter</span></div>
+              <div class="plat-task"><b>Follow up on results</b><span>James Wong</span></div>
+              <div class="plat-task"><b>Patient education</b><span>Anna Heraidine</span></div>
+            </div>
+            <div class="plat-col">
+              <h4>Completed <span>5</span></h4>
+              <div class="plat-task is-done"><b>Medication review</b><span>Robert Chen</span></div>
+              <div class="plat-task is-done"><b>Lab results review</b><span>Lisa Tan</span></div>
+              <div class="plat-task is-done"><b>Care plan update</b><span>David Park</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-analytics" aria-labelledby="plat-tab-analytics" tabindex="0" hidden>
+          <div class="plat-head"><h3>Practice analytics</h3><span class="plat-chip">Last 30 days</span></div>
+          <div class="plat-kpis">
+            <div class="plat-kpi"><span>Patients</span><strong>324</strong><em class="up">&uarr; 12%</em></div>
+            <div class="plat-kpi"><span>Visit completion</span><strong>96%</strong><em class="up">&uarr; 4%</em></div>
+            <div class="plat-kpi"><span>Active patients</span><strong>1,243</strong><em class="up">&uarr; 10%</em></div>
+            <div class="plat-kpi"><span>Avg. wait time</span><strong>18 min</strong><em class="down">&darr; 20%</em></div>
+          </div>
+          <div class="plat-cols plat-cols--3">
+            <div class="plat-card">
+              <h4>Visits by type</h4>
+              <svg class="plat-donut" viewBox="0 0 42 42" role="img" aria-label="Follow-up 45 percent, annual exam 20 percent, consultation 15 percent, other 20 percent">
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#E8EEF7" stroke-width="6"/>
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2563EB" stroke-width="6" stroke-dasharray="45 55" stroke-dashoffset="25"/>
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#60A5FA" stroke-width="6" stroke-dasharray="20 80" stroke-dashoffset="80"/>
+                <circle cx="21" cy="21" r="15.9" fill="none" stroke="#A7C7FE" stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="60"/>
+              </svg>
+              <ul class="plat-legend">
+                <li><i style="background:#2563EB"></i>Follow-up visit <b>45%</b></li>
+                <li><i style="background:#60A5FA"></i>Annual exam <b>20%</b></li>
+                <li><i style="background:#A7C7FE"></i>Consultation <b>15%</b></li>
+                <li><i style="background:#E8EEF7"></i>Other <b>20%</b></li>
+              </ul>
+            </div>
+            <div class="plat-card">
+              <h4>Department performance</h4>
+              <ul class="plat-bars">
+                <li><span>General</span><b style="--w:100%">420</b></li>
+                <li><span>Cardiology</span><b style="--w:76%">320</b></li>
+                <li><span>Pediatrics</span><b style="--w:48%">200</b></li>
+                <li><span>Dermatology</span><b style="--w:43%">180</b></li>
+              </ul>
+            </div>
+            <div class="plat-card">
+              <h4>Quality measures</h4>
+              <ul class="plat-mini">
+                <li><b>BP control</b><span>Target 80% &middot; tracking 76%</span></li>
+                <li><b>Diabetes HbA1c</b><span>Target 75% &middot; tracking 71%</span></li>
+                <li><b>Preventive screening</b><span>Target 90% &middot; tracking 88%</span></li>
+              </ul>
+              <p class="plat-note">Figures are illustrative targets, not measured results.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="plat-view" role="tabpanel" id="plat-panel-settings" aria-labelledby="plat-tab-settings" tabindex="0" hidden>
+          <div class="plat-head"><h3>Settings</h3><span class="plat-chip">Practice admin</span></div>
+          <div class="plat-cols">
+            <div class="plat-card">
+              <h4>Practice profile</h4>
+              <dl class="plat-dl">
+                <dt>Practice name</dt><dd>Demo Family Care</dd>
+                <dt>Time zone</dt><dd>Pacific (UTC&minus;8)</dd>
+                <dt>Clinic hours</dt><dd>8:00 AM &ndash; 5:30 PM</dd>
+                <dt>Default visit length</dt><dd>30 minutes</dd>
+              </dl>
+            </div>
+            <div class="plat-card">
+              <h4>Notifications</h4>
+              <ul class="plat-switches">
+                <li>New lab result<span class="plat-switch is-on" aria-hidden="true"></span><em>On</em></li>
+                <li>Refill request<span class="plat-switch is-on" aria-hidden="true"></span><em>On</em></li>
+                <li>Appointment cancelled<span class="plat-switch" aria-hidden="true"></span><em>Off</em></li>
+                <li>Daily summary<span class="plat-switch is-on" aria-hidden="true"></span><em>On</em></li>
+              </ul>
+              <p class="plat-note">Controls shown in their demo state; nothing here is saved.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+    <p class="claims-note">This platform preview is an illustrative interface. Every patient, clinician, appointment and figure in it is fictional.</p>
+  </div>
+</section>
+
+<!-- ───────────────────────────── workflow ───────────────────────────── -->
+<section class="sec sec--wash" id="workflow">
+  <div class="shell">
+    <header class="sec__head" data-stagger>
+      <p class="eyebrow tw:js:motion-safe:opacity-0" data-stagger-item>04. Getting started</p>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>Designed for a short cutover.</h2>
+      <p class="sec__sub tw:js:motion-safe:opacity-0" data-stagger-item>The implementation path this concept is designed around: charts migrated, templates mapped, and support alongside your staff through the first week of clinic.</p>
+    </header>
+    <ol class="steps" data-stagger>
+      <li class="step tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift><span class="step__n">01</span><h3>Migrate</h3><p>Demographics, problems, medications and documents are imported from your current system, with duplicates reconciled before go-live.</p></li>
+      <li class="step tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift><span class="step__n">02</span><h3>Configure</h3><p>Templates, order sets and schedules are intended to be shaped around your specialty, then reviewed with the providers who will use them.</p></li>
+      <li class="step tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift><span class="step__n">03</span><h3>Go live</h3><p>The plan covers support through the first full clinic week, with a named lead staying with the practice afterwards.</p></li>
+    </ol>
+    <p class="claims-note">These steps describe the intended implementation process for this product concept, not a service already delivered.</p>
+  </div>
+</section>
+
+<!-- ───────────────────────────── insights band ───────────────────────────── -->
+<section class="band" id="insights">
+  <div class="shell band__in" data-stagger>
+    <div class="band__copy tw:js:motion-safe:opacity-0" data-stagger-item>
+      <p class="eyebrow eyebrow--light">05. Design targets</p>
+      <h2 data-scrub>Less time in the chart.<br>More time with patients.</h2>
+      <p>These are the targets the product is designed against — not measured results. Veyra is a concept with no deployed sites behind these figures.</p>
+      <a class="btn btn--white btn--lg tw:press" data-press href="#demo">How we would measure this <svg class="arr" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="band__stats tw:js:motion-safe:opacity-0" data-stagger-item>
+      <div><strong data-count="38" data-suffix="%">0</strong><span>Target cut in documentation time</span></div>
+      <div><strong data-count="96" data-suffix="%">0</strong><span>Target same-day visit closure</span></div>
+      <div><strong data-count="1243">0</strong><span>Illustrative panel size per site</span></div>
+      <div><strong data-count="12" data-suffix=" days">0</strong><span>Target time to go-live</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────── security ───────────────────────────── -->
+<section class="sec sec--navy" id="security">
+  <div class="shell">
+    <header class="sec__head" data-stagger>
+      <p class="eyebrow eyebrow--light">06. Secure by design</p>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>Every view of every record,<br><span>written down.</span></h2>
+      <p class="sec__sub sec__sub--light">Not a badge on a page &mdash; a ledger you can read. The design keeps an append-only trail of who opened what, when, and what changed.</p>
+    </header>
+
+    <div class="ledger" data-stagger>
+      <div class="ledger__controls tw:js:motion-safe:opacity-0" data-stagger-item>
+        <div class="ledger__row">
+          <span class="ledger__ico" data-ico="lock"></span>
+          <div><h3>Encrypted in transit and at rest</h3><p>TLS 1.3 on the wire, AES-256 on disk, keys rotated on a fixed schedule.</p></div>
+        </div>
+        <div class="ledger__row">
+          <span class="ledger__ico" data-ico="user"></span>
+          <div><h3>Access scoped to the care relationship</h3><p>Roles grant the minimum a job needs; break-glass access is possible, and never quiet.</p></div>
+        </div>
+        <div class="ledger__row">
+          <span class="ledger__ico" data-ico="records"></span>
+          <div><h3>Edits are versioned, never overwritten</h3><p>Every amendment keeps its predecessor, its author and its timestamp.</p></div>
+        </div>
+        <div class="ledger__row">
+          <span class="ledger__ico" data-ico="shield"></span>
+          <div><h3>The trail leaves with you</h3><p>Export the full audit log on demand, in a format another system can read.</p></div>
+        </div>
+      </div>
+
+      <div class="ledger__trail tw:js:motion-safe:opacity-0" data-stagger-item>
+        <div class="ledger__head">
+          <span class="ledger__dot" aria-hidden="true"></span>
+          <h3>Audit trail</h3>
+          <span class="ledger__tag">Append-only</span>
+        </div>
+        <ul class="ledger__log">
+          <li><span class="ledger__t">09:41:02</span><span class="ledger__who">Dr. S. Kim</span><span class="ledger__act">opened chart &middot; PT-184203</span></li>
+          <li><span class="ledger__t">09:40:55</span><span class="ledger__who">R. Pena, RN</span><span class="ledger__act">amended vitals &middot; PT-118431 &middot; v3</span></li>
+          <li><span class="ledger__t">09:38:17</span><span class="ledger__who">System</span><span class="ledger__act">exported audit log &middot; 30 days</span></li>
+          <li class="is-flag"><span class="ledger__t">09:36:40</span><span class="ledger__who">D. Park</span><span class="ledger__act">sign-in blocked &middot; 3 failed attempts</span></li>
+        </ul>
+        <p class="ledger__note">Illustrative entries. Names, identifiers and events are fictional.</p>
+      </div>
+    </div>
+
+    <p class="claims-note claims-note--light">Veyra is a product concept. The controls above describe the security model it is designed around &mdash; not a certification, an audit result or an implemented system.</p>
+  </div>
+</section>
+
+<!-- ───────────────────────────── trust proof ───────────────────────────── -->
+<section class="sec sec--wash" id="trust-proof">
+  <div class="shell">
+    <header class="sec__head" data-stagger>
+      <p class="eyebrow tw:js:motion-safe:opacity-0" data-stagger-item>07. Why a clinic would trust this</p>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>Trust is a property of the record,<br><span class="muted">not a logo wall.</span></h2>
+      <p class="sec__sub tw:js:motion-safe:opacity-0" data-stagger-item>Four things a practice can check for itself, on the first day, without taking anyone's word for it.</p>
+    </header>
+
+    <div class="proof" data-stagger>
+      <article class="proof__item tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+        <p class="proof__n">01</p>
+        <h3>Every edit keeps its past</h3>
+        <p>Open any note and read its history &mdash; who changed what, and when. Nothing is overwritten in place.</p>
+        <p class="proof__check">Check it: amend a note, reopen v1.</p>
+      </article>
+      <article class="proof__item tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+        <p class="proof__n">02</p>
+        <h3>Reads are logged, not just writes</h3>
+        <p>The part most systems leave out. Opening a chart is an event, and it is recorded like any other.</p>
+        <p class="proof__check">Check it: view a chart, read the trail.</p>
+      </article>
+      <article class="proof__item tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+        <p class="proof__n">03</p>
+        <h3>The door out stays open</h3>
+        <p>Charts, documents and audit logs export in standard formats &mdash; during the contract, and after it ends.</p>
+        <p class="proof__check">Check it: export before you commit.</p>
+      </article>
+      <article class="proof__item tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+        <p class="proof__n">04</p>
+        <h3>Standards, not a private format</h3>
+        <p>HL7 v2 and FHIR R4 interfaces, so a lab, an HIE or your next system can read what you have.</p>
+        <p class="proof__check">Check it: request the FHIR endpoints.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────── bento ───────────────────────────── -->
+<section class="sec sec--amb" id="showcase">
+  <span class="amb amb--a" aria-hidden="true"></span>
+  <span class="amb amb--b" aria-hidden="true"></span>
+  <div class="shell">
+    <header class="sec__head" data-stagger>
+      <p class="eyebrow tw:js:motion-safe:opacity-0" data-stagger-item>08. In practice</p>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>One record,<br><span class="muted">every surface.</span></h2>
+      <p class="sec__sub tw:js:motion-safe:opacity-0" data-stagger-item>Desktop at the nurses&rsquo; station, phone on rounds, and the same chart underneath both.</p>
+    </header>
+
+    <div class="bx" data-stagger>
+      <article class="bx__cell glass tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+        <div class="bx__stage bx__stage--shot">
+          <video class="bx__shot bx__loop" muted loop playsinline preload="metadata" poster="assets/video/in-practice-poster.jpg?v=3" width="1120" height="794" aria-label="The clinic overview on a laptop: patient numbers roll up, the appointments trend draws and the camera moves across today&rsquo;s list, all illustrative data">
+            <source src="assets/video/in-practice-screen.webm?v=3" type="video/webm">
+            <source src="assets/video/in-practice-screen.mp4?v=3" type="video/mp4">
+          </video>
+        </div>
+        <div class="bx__txt"><h3>At the station</h3><p>The full chart, the day&rsquo;s list and every queue on one screen.</p></div>
+      </article>
+
+      <article class="bx__cell glass tw:lift tw:js:motion-safe:opacity-0" data-stagger-item data-lift>
+        <div class="bx__stage bx__stage--shot">
+          <video class="bx__shot bx__loop" muted loop playsinline preload="metadata" poster="assets/video/on-rounds-poster.jpg?v=4" width="1072" height="760" aria-label="The patient chart on a phone, the camera moving in as it scrolls: vitals, medication reconciliation and lab results, all demo records">
+            <source src="assets/video/on-rounds-screen.webm?v=4" type="video/webm">
+            <source src="assets/video/on-rounds-screen.mp4?v=4" type="video/mp4">
+          </video>
+        </div>
+        <div class="bx__txt"><h3>On rounds</h3><p>Approvals, results and messages from a pocket.</p></div>
+      </article>
+
+      <article class="bx__wide glass tw:js:motion-safe:opacity-0" data-stagger-item data-scroll-scale>
+        <div class="bx__scene">
+          <div class="bx__float bx__chips glass">
+            <span class="bx__chip" style="--i:0"><i data-ico="shield"></i>Allergies</span>
+            <span class="bx__chip" style="--i:1"><i data-ico="pill"></i>Medications</span>
+            <span class="bx__chip" style="--i:2"><i data-ico="pulse"></i>Problems</span>
+            <span class="bx__chip" style="--i:3"><i data-ico="check"></i>Immunisations</span>
+            <span class="bx__chip" style="--i:4"><i data-ico="chart"></i>Imaging</span>
+            <span class="bx__chip" style="--i:5"><i data-ico="records"></i>Care plan</span>
+          </div>
+
+          <div class="bx__iphone">
+            <div class="bx__iphonebody">
+              <span class="bx__iphonekey bx__iphonekey--action" aria-hidden="true"></span>
+              <span class="bx__iphonekey bx__iphonekey--up" aria-hidden="true"></span>
+              <span class="bx__iphonekey bx__iphonekey--down" aria-hidden="true"></span>
+              <span class="bx__iphonekey bx__iphonekey--power" aria-hidden="true"></span>
+              <div class="bx__iphoneglass">
+                <div class="bx__phonescreen">
+                  <video class="bx__loop" muted loop playsinline preload="metadata" poster="assets/video/in-context-poster.jpg" width="780" height="1688" aria-label="Patient chart for Alex Morgan on a phone: it opens on the patient photo, then a record sheet slides up through allergies, medications, problems, care plan and care team">
+                    <source src="assets/video/in-context-screen.webm" type="video/webm">
+                    <source src="assets/video/in-context-screen.mp4" type="video/mp4">
+                  </video>
+                  <span class="bx__island" aria-hidden="true"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bx__float bx__log glass">
+            <span class="bx__logdot" aria-hidden="true"></span>Audit trail
+            <i>09:41 &middot; Dr. S. Kim opened chart</i>
+          </div>
+
+          <div class="bx__float bx__who glass">
+            <div class="bx__whohead"><i class="bx__ava">SK</i><span><b>Dr. Sarah Kim</b>Cardiology</span></div>
+            <p class="bx__wholine">4 patients today</p>
+            <p class="bx__whometa">On the care team since Dec 2023</p>
+          </div>
+
+          <span class="bx__cursor" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3.2v15.6l4.3-4.1 2.8 6.3 2.9-1.3-2.8-6.2h6.1Z" fill="#0B1324" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        </div>
+        <div class="bx__txt"><h3>Everything in context</h3><p>Problems, medications and the people responsible sit beside the record &mdash; never in another tab.</p></div>
+      </article>
+    </div>
+
+    <p class="claims-note">Illustrative interfaces. Every patient, clinician and value shown is fictional.</p>
+  </div>
+</section>
+
+<!-- ───────────────────────────── cta ───────────────────────────── -->
+<section class="cta sec--wash" id="demo">
+  <div class="shell cta__in" data-stagger>
+    <div>
+      <h2 class="tw:js:motion-safe:opacity-0" data-stagger-item data-split>Smarter records start here.</h2>
+      <p class="tw:js:motion-safe:opacity-0" data-stagger-item>See Veyra against your own workflows. A 30-minute walkthrough with a clinical specialist — no slide deck.</p>
+    </div>
+    <form class="cta__form tw:js:motion-safe:opacity-0" data-stagger-item novalidate>
+      <label class="cta__field"><span class="sr">Work email</span><input type="email" name="email" placeholder="you@clinic.com" required></label>
+      <button class="btn btn--dark btn--lg tw:press" data-press type="submit">Request a demo <svg class="arr" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <p class="cta__note" data-note>We'll reply within one business day. No sales sequence.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ───────────────────────────── footer ───────────────────────────── -->
+<footer class="ftr">
+  <div class="shell ftr__in">
+    <div class="ftr__brand">
+      <a class="ftr__logo" href="#top" aria-label="Veyra home"><img src="assets/img/veyra-logo-light.svg" alt="" width="140" height="45"></a>
+      <p>The electronic health record built around the patient timeline — and the people reading it.</p>
+    </div>
+    <div class="ftr__cols">
+      <div><h4>Product</h4><a href="#product">Charting</a><a href="#platform" data-plat-tab="appointments">Scheduling</a><a href="#product" data-record-open="meds">e-Prescribing</a><a href="#platform" data-plat-tab="analytics">Analytics</a><a href="#showcase">In practice</a></div>
+      <div><h4>Solutions</h4><a href="#product">Primary care</a><a href="#platform">Specialty clinics</a><a href="#workflow">Multi-site groups</a><a href="#security">Behavioral health</a></div>
+      <div><h4>Resources</h4><a href="#security">Security</a><a href="#workflow">Implementation</a><a href="#trust-proof">Why trust Veyra</a><a href="#showcase">In practice</a></div>
+      <div><h4>Company</h4><a href="404.html">About</a><a href="404.html">Careers</a><a href="404.html">Press</a><a href="#demo">Contact</a></div>
+    </div>
+  </div>
+  <div class="shell ftr__bar">
+    <span>© 2026 Veyra Health, Inc. All rights reserved.</span>
+    <nav aria-label="Legal"><a href="404.html">Privacy</a><a href="404.html">Terms</a><a href="404.html">HIPAA notice</a><a href="404.html">Status</a></nav>
+  </div>
+</footer>
+
+<a class="totop" href="#top" aria-label="Back to top" data-totop>
+  <svg class="totop__ring" viewBox="0 0 48 48" aria-hidden="true"><circle class="totop__track" cx="24" cy="24" r="22"/><circle class="totop__fill" cx="24" cy="24" r="22" pathLength="1"/></svg>
+  <svg class="totop__arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13.2V3M3.6 7.4 8 3l4.4 4.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+
+<script src="assets/js/vendor/lenis.js?v=1.3.26"></script>
+<script src="assets/js/vendor/motion.js?v=13.5.1"></script>
+<script src="assets/js/motion.js?v=2"></script>
+<script src="assets/js/app.js?v=18"></script>
+</body>
+</html>

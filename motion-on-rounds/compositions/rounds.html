@@ -1,0 +1,717 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-latin.woff2") format("woff2");
+      font-weight: 600 800;
+      font-style: normal;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      background: #e8edf5;
+      font-family: "Inter", sans-serif;
+      color: #0b1324;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Laid out in phone points, drawn at 2×. Every block has a fixed height so the scroll stops below are exact. */
+    #ph {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 844px;
+      overflow: hidden;
+      transform: scale(2);
+      transform-origin: 0 0;
+      background: linear-gradient(180deg, #edf1f8 0%, #e4eaf4 100%);
+    }
+    .ph-blob {
+      position: absolute;
+      border-radius: 50%;
+    }
+    .ph-blob--a {
+      left: -120px;
+      top: 90px;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(closest-side, rgba(120, 160, 255, 0.55), rgba(120, 160, 255, 0));
+    }
+    .ph-blob--b {
+      right: -140px;
+      top: 380px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(closest-side, rgba(176, 160, 255, 0.45), rgba(176, 160, 255, 0));
+    }
+    .ph-blob--c {
+      left: -60px;
+      bottom: -80px;
+      width: 420px;
+      height: 340px;
+      background: radial-gradient(closest-side, rgba(125, 211, 232, 0.4), rgba(125, 211, 232, 0));
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.75);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 10px 26px -18px rgba(30, 41, 74, 0.35);
+      backdrop-filter: saturate(170%) blur(18px);
+      -webkit-backdrop-filter: saturate(170%) blur(18px);
+    }
+
+    /* ── scrolling content ── */
+    #ph-scroll {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      padding: 170px 16px 120px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .card {
+      border-radius: 22px;
+      padding: 16px;
+      overflow: hidden;
+    }
+    .card__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 24px;
+    }
+    .card__head h2 {
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+    }
+    .card__aside {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #56657c;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 9px;
+      border-radius: 8px;
+      background: #dfe8ff;
+      color: #1d4ed8;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    /* vitals */
+    #c-vitals {
+      height: 200px;
+    }
+    .vitals {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .vital {
+      height: 61px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+    .vital span {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #56657c;
+    }
+    .vital b {
+      display: block;
+      margin-top: 3px;
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+    }
+    .vital b small {
+      margin-left: 3px;
+      font-family: "Inter", sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0;
+      color: #56657c;
+    }
+
+    /* medication reconciliation */
+    #c-meds {
+      height: 452px;
+    }
+    .meds {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .med {
+      position: relative;
+      height: 89px;
+      padding: 11px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+    }
+    .med__dose {
+      margin-top: 6px;
+      font-size: 16.5px;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    .med__meta {
+      margin-top: 3px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #56657c;
+    }
+    .med__chev {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      width: 16px;
+      height: 16px;
+      margin-top: -8px;
+      color: #8a97ab;
+    }
+    .med__state {
+      position: absolute;
+      right: 38px;
+      top: 50%;
+      margin-top: -11px;
+      width: 22px;
+      height: 22px;
+    }
+    .chk {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 1.6px solid #c4cedd;
+      background: rgba(255, 255, 255, 0.8);
+    }
+    .chk-on {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #16a34a;
+      color: #ffffff;
+    }
+    .chk-on svg {
+      width: 12px;
+      height: 12px;
+    }
+    .med.is-stopped .med__dose {
+      color: #56657c;
+    }
+    .tag--muted {
+      background: #e6eaf1;
+      color: #475569;
+    }
+    .stop {
+      position: absolute;
+      right: 38px;
+      top: 50%;
+      margin-top: -11px;
+      height: 22px;
+      padding: 0 8px;
+      display: flex;
+      align-items: center;
+      border-radius: 99px;
+      background: #eef1f6;
+      color: #475569;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    /* labs */
+    #c-labs {
+      height: 262px;
+    }
+    .rows {
+      margin-top: 10px;
+    }
+    .lab {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 49px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .lab:last-child {
+      border-bottom: 0;
+    }
+    .lab b {
+      display: block;
+      font-size: 14.5px;
+      font-weight: 700;
+    }
+    .lab span {
+      display: block;
+      margin-top: 1px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #56657c;
+    }
+    .pill {
+      height: 24px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .pill--ok {
+      background: #dcf5e6;
+      color: #166534;
+    }
+    .pill--warn {
+      background: #fdecc8;
+      color: #8a4b06;
+    }
+    .pill--done {
+      background: #dfe8ff;
+      color: #1d4ed8;
+    }
+    .pill--wait {
+      background: #eef1f6;
+      color: #475569;
+    }
+    .lab__swap {
+      position: relative;
+      width: 92px;
+      height: 24px;
+    }
+    .lab__swap .pill {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    /* care team */
+    #c-care {
+      height: 196px;
+    }
+    .who {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 64px;
+    }
+    .who + .who {
+      border-top: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .ava {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      flex: none;
+      border-radius: 50%;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      font-style: normal;
+    }
+    .ava--1 { background: linear-gradient(145deg, #d0306f, #a3185a); }
+    .ava--2 { background: linear-gradient(145deg, #0f7c72, #0b5e57); }
+    .who__txt {
+      flex: 1;
+    }
+    .who__txt b {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .who__txt span {
+      display: block;
+      margin-top: 1px;
+      font-size: 12.5px;
+      color: #56657c;
+    }
+    .who__msg {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #dfe8ff;
+      color: #1d4ed8;
+    }
+    .who__msg svg {
+      width: 17px;
+      height: 17px;
+    }
+    .care-rows {
+      margin-top: 10px;
+    }
+
+    /* tasks */
+    #c-tasks {
+      height: 214px;
+    }
+    .task {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 52px;
+    }
+    .task + .task {
+      border-top: 1px solid rgba(148, 163, 184, 0.22);
+    }
+    .box {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      flex: none;
+    }
+    .box .chk,
+    .box .chk-on {
+      border-radius: 7px;
+    }
+    .task__txt {
+      position: relative;
+      font-size: 14.5px;
+      font-weight: 600;
+    }
+    .task__strike {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1.5px;
+      background: #56657c;
+    }
+    .task.is-done .task__txt {
+      color: #56657c;
+    }
+
+    /* ── fixed chrome ── */
+    #ph-head {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 390px;
+      height: 158px;
+    }
+    #ph-headbg {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      border-radius: 0 0 24px 24px;
+      border-top: 0;
+    }
+    .id {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      top: 58px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .id__ava {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      flex: none;
+      border-radius: 13px;
+      background: #d6e2ff;
+      color: #1d4ed8;
+      font-family: "Manrope", sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .id__txt {
+      flex: 1;
+    }
+    .id__txt b {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 23px;
+    }
+    .id__txt span {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #56657c;
+    }
+    .allergy {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      height: 32px;
+      padding: 0 12px 0 9px;
+      border-radius: 99px;
+      background: #ffe3d8;
+      border: 1px solid #ffd0bf;
+      color: #b42a0c;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .allergy svg {
+      width: 16px;
+      height: 16px;
+    }
+    #ph-seg {
+      position: absolute;
+      left: 16px;
+      top: 114px;
+      width: 358px;
+      height: 34px;
+      padding: 3px;
+      border-radius: 12px;
+      background: rgba(214, 222, 235, 0.7);
+    }
+    #seg-ind {
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 88px;
+      height: 28px;
+      border-radius: 9px;
+      background: #ffffff;
+      box-shadow: 0 2px 6px -2px rgba(30, 41, 74, 0.25);
+    }
+    .seg {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      height: 28px;
+    }
+    .seg span {
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+
+    #ph-bar {
+      position: absolute;
+      right: 3px;
+      top: 164px;
+      width: 3px;
+      height: 293px;
+      border-radius: 3px;
+      background: rgba(30, 41, 59, 0.38);
+    }
+
+    #ph-tabs {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 24px;
+      height: 64px;
+      border-radius: 32px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+    }
+    .tab {
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .tab svg {
+      width: 21px;
+      height: 21px;
+    }
+    .tab.is-on {
+      color: #1d4ed8;
+    }
+  </style>
+
+  <div id="root" data-composition-id="rounds" data-width="780" data-height="1688">
+    <div id="ph" data-layout-allow-overflow>
+      <span class="ph-blob ph-blob--a"></span>
+      <span class="ph-blob ph-blob--b"></span>
+      <span class="ph-blob ph-blob--c"></span>
+
+      <div id="ph-scroll" data-layout-allow-overlap data-layout-allow-occlusion>
+        <section class="card glass" id="c-vitals">
+          <div class="card__head"><h2>Today&rsquo;s vitals</h2><span class="tag tag--muted">Demo values</span></div>
+          <div class="vitals">
+            <div class="vital"><span>Blood pressure</span><b>118/76<small>mmHg</small></b></div>
+            <div class="vital"><span>Heart rate</span><b>72<small>bpm</small></b></div>
+            <div class="vital"><span>Temperature</span><b>36.8<small>&deg;C</small></b></div>
+            <div class="vital"><span>SpO&#8322;</span><b>98<small>%</small></b></div>
+          </div>
+        </section>
+
+        <section class="card glass" id="c-meds">
+          <div class="card__head"><h2>Medication reconciliation</h2></div>
+          <div class="meds">
+            <div class="med" id="med-a">
+              <span class="tag">Demo medication A</span>
+              <p class="med__dose">10 mg &middot; Oral &middot; Once daily</p>
+              <p class="med__meta">Alex Lee &middot; VY-1042 &middot; Demo record</p>
+              <span class="med__state"><i class="chk"></i><i class="chk-on" id="ok-a"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
+              <svg class="med__chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="med" id="med-b">
+              <span class="tag">Demo medication B</span>
+              <p class="med__dose">5 mg &middot; Oral &middot; Twice daily</p>
+              <p class="med__meta">Alex Lee &middot; VY-1042 &middot; Demo record</p>
+              <span class="med__state"><i class="chk"></i><i class="chk-on" id="ok-b"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
+              <svg class="med__chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="med is-stopped" id="med-c">
+              <span class="tag tag--muted">Demo medication C</span>
+              <p class="med__dose">20 mg &middot; Discontinued</p>
+              <p class="med__meta">Alex Lee &middot; VY-1042 &middot; Demo record</p>
+              <span class="stop">Stopped</span>
+              <svg class="med__chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="med" id="med-d">
+              <span class="tag">Demo medication D</span>
+              <p class="med__dose">2 puffs &middot; Inhaled &middot; As needed</p>
+              <p class="med__meta">Alex Lee &middot; VY-1042 &middot; Demo record</p>
+              <span class="med__state"><i class="chk"></i><i class="chk-on" id="ok-d"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
+              <svg class="med__chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3.5 4.5 4.5L6 12.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </section>
+
+        <section class="card glass" id="c-labs">
+          <div class="card__head"><h2>Lab results</h2><span class="card__aside">Apr 28</span></div>
+          <div class="rows">
+            <div class="lab"><div><b>Demo panel 1</b><span>Resulted 08:40</span></div><span class="pill pill--ok">In range</span></div>
+            <div class="lab"><div><b>Demo panel 2</b><span>Resulted 08:52</span></div><span class="pill pill--ok">In range</span></div>
+            <div class="lab"><div><b>Demo panel 3</b><span>Resulted 09:12</span></div>
+              <span class="lab__swap"><span class="pill pill--warn" id="lab-review">Review</span><span class="pill pill--done" id="lab-done">Reviewed</span></span>
+            </div>
+            <div class="lab"><div><b>Demo panel 4</b><span>Collected 09:30</span></div><span class="pill pill--wait">Pending</span></div>
+          </div>
+        </section>
+
+        <section class="card glass" id="c-care">
+          <div class="card__head"><h2>Care team</h2><span class="card__aside">2 on shift</span></div>
+          <div class="care-rows">
+            <div class="who"><i class="ava ava--1">SK</i><span class="who__txt"><b>Dr. Sarah Kim</b><span>Cardiology &middot; Attending</span></span><span class="who__msg"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4.5h12a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5H9l-3.5 3v-3H4A1.5 1.5 0 0 1 2.5 13V6A1.5 1.5 0 0 1 4 4.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
+            <div class="who"><i class="ava ava--2">RP</i><span class="who__txt"><b>Rosa Pena, RN</b><span>Triage</span></span><span class="who__msg"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4.5h12a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5H9l-3.5 3v-3H4A1.5 1.5 0 0 1 2.5 13V6A1.5 1.5 0 0 1 4 4.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span></div>
+          </div>
+        </section>
+
+        <section class="card glass" id="c-tasks">
+          <div class="card__head"><h2>Next steps</h2><span class="card__aside">3 today</span></div>
+          <div class="care-rows">
+            <div class="task is-done"><span class="box"><i class="chk"></i><i class="chk-on"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span><span class="task__txt">Confirm medication list<i class="task__strike"></i></span></div>
+            <div class="task" id="task-lab"><span class="box"><i class="chk"></i><i class="chk-on" id="ok-task"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2.2 6.3 2.5 2.5 5.1-5.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span><span class="task__txt" id="task-lab-txt">Review lab report<i class="task__strike" id="task-strike"></i></span></div>
+            <div class="task"><span class="box"><i class="chk"></i></span><span class="task__txt">Book cardiology follow-up</span></div>
+          </div>
+        </section>
+      </div>
+
+      <header id="ph-head" data-layout-allow-overlap data-layout-allow-occlusion>
+        <span id="ph-headbg" class="glass"></span>
+        <div class="id" data-layout-allow-overlap data-layout-allow-occlusion>
+          <span class="id__ava">AL</span>
+          <span class="id__txt"><b>Alex Lee</b><span>Demo &middot; VY-1042</span></span>
+          <span class="allergy"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="#EA580C"/><path d="M8 4.4v4.3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="11.3" r="1.05" fill="#fff"/></svg>Penicillin allergy</span>
+        </div>
+        <div id="ph-seg" data-layout-allow-overlap data-layout-allow-occlusion>
+          <span id="seg-ind"></span>
+          <div class="seg" data-layout-allow-overlap data-layout-allow-occlusion><span>Overview</span><span>Meds</span><span>Labs</span><span>Care</span></div>
+        </div>
+      </header>
+
+      <span id="ph-bar"></span>
+
+      <nav id="ph-tabs" class="glass" data-layout-allow-overlap data-layout-allow-occlusion>
+        <span class="tab is-on"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M6 3.5h7l3.5 3.5v11.5h-10.5Z M12.5 3.5V7.5h4 M8.5 11.5h5 M8.5 14.5h3.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/></svg>Chart</span>
+        <span class="tab"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="8" r="3.6" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4.5 18.5c1.2-3.4 3.6-5 6.5-5s5.3 1.6 6.5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>Patients</span>
+        <span class="tab"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M4 6.5l1.7 1.7L8.8 5 M4 14l1.7 1.7 3.1-3.2 M11.5 7h6.5 M11.5 14.5h6.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Tasks</span>
+        <span class="tab"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M4.5 5h13a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5H10l-4 3.2V16H4.5A1.5 1.5 0 0 1 3 14.5v-8A1.5 1.5 0 0 1 4.5 5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Messages</span>
+      </nav>
+    </div>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Scroll stops (points): content top 0 → meds 218 → labs 684 → end 826 (content 1670 tall in an 844 screen).
+    // The indicator thumb is 293 pt on a 580 pt track, so it travels 287 pt over 826 pt of scroll.
+    const MAX = 826;
+    const thumb = (s) => (s / MAX) * 287;
+    const SEG = 87.5;
+    // resting state at the top of the loop
+    tl.fromTo("#ph-scroll", { y: 0 }, { y: 0, duration: 0.01 }, 0);
+    tl.fromTo("#ph-bar", { y: 0, opacity: 0 }, { y: 0, opacity: 0, duration: 0.01 }, 0);
+    tl.fromTo("#seg-ind", { x: 0 }, { x: 0, duration: 0.01 }, 0);
+
+    const scroll = (at, from, to, dur, segIndex, segFrom) => {
+      tl.fromTo("#ph-scroll", { y: -from }, { y: -to, duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#ph-bar", { y: thumb(from) }, { y: thumb(to), duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#ph-bar", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out", immediateRender: false }, at);
+      tl.fromTo("#ph-bar", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, at + dur + 0.45);
+      tl.fromTo("#seg-ind", { x: segFrom * SEG }, { x: segIndex * SEG, duration: 0.5, ease: "power3.inOut", immediateRender: false }, at + dur * 0.35);
+    };
+
+    // header glass appears once content runs under it, and clears when back at the top
+    tl.fromTo("#ph-headbg", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.out" }, 1.0);
+    tl.fromTo("#ph-headbg", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.in", immediateRender: false }, 10.3);
+
+    // baselines for things that change mid-loop
+    tl.fromTo(".chk-on[id^='ok-']", { opacity: 0, scale: 0.4 }, { opacity: 0, scale: 0.4, duration: 0.01 }, 0);
+    tl.fromTo("#lab-done", { opacity: 0, x: 6 }, { opacity: 0, x: 6, duration: 0.01 }, 0);
+    tl.fromTo("#lab-review", { opacity: 1, x: 0 }, { opacity: 1, x: 0, duration: 0.01 }, 0);
+    tl.fromTo("#task-strike", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 0, duration: 0.01 }, 0);
+    tl.fromTo("#task-lab-txt", { color: "#0b1324" }, { color: "#0b1324", duration: 0.01 }, 0);
+
+    // ── 0.9 scroll to medications ──
+    scroll(0.9, 0, 218, 1.2, 1, 0);
+
+    // ── 2.5 reconcile A, B and D one by one ──
+    ["#ok-a", "#ok-b", "#ok-d"].forEach((id, i) => {
+      tl.fromTo(id, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, 2.5 + i * 0.5);
+    });
+
+    // ── 4.2 on to labs; panel 3 gets signed off ──
+    scroll(4.2, 218, 684, 1.3, 2, 1);
+    tl.fromTo("#lab-review", { opacity: 1, x: 0 }, { opacity: 0, x: -4, duration: 0.15, ease: "power2.in", immediateRender: false }, 6.0);
+    tl.fromTo("#lab-done", { opacity: 0, x: 6 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out", immediateRender: false }, 6.1);
+
+    // ── 6.6 to the end: care team and next steps; the lab task is ticked ──
+    scroll(6.6, 684, MAX, 1.0, 3, 2);
+    tl.fromTo("#ok-task", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, 8.0);
+    tl.fromTo("#task-strike", { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: "power3.out", immediateRender: false }, 8.1);
+    tl.fromTo("#task-lab-txt", { color: "#0b1324" }, { color: "#56657c", duration: 0.3, ease: "power2.out", immediateRender: false }, 8.1);
+
+    // medication ticks reset while the meds card is off screen, so the loop starts clean
+    tl.fromTo("#ok-a, #ok-b, #ok-d", { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.4, duration: 0.01, immediateRender: false }, 8.6);
+
+    // ── 9.0 back to the top ──
+    scroll(9.0, MAX, 0, 1.7, 0, 3);
+
+    // lab and task states reset once they are below the fold again
+    tl.fromTo("#lab-done", { opacity: 1, x: 0 }, { opacity: 0, x: 6, duration: 0.01, immediateRender: false }, 11.0);
+    tl.fromTo("#lab-review", { opacity: 0, x: -4 }, { opacity: 1, x: 0, duration: 0.01, immediateRender: false }, 11.0);
+    tl.fromTo("#ok-task", { opacity: 1, scale: 1 }, { opacity: 0, scale: 0.4, duration: 0.01, immediateRender: false }, 11.0);
+    tl.fromTo("#task-strike", { scaleX: 1 }, { scaleX: 0, duration: 0.01, immediateRender: false }, 11.0);
+    tl.fromTo("#task-lab-txt", { color: "#56657c" }, { color: "#0b1324", duration: 0.01, immediateRender: false }, 11.0);
+
+    window.__timelines["rounds"] = tl;
+  </script>
+</template>

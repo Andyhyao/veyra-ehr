@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vegre",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4178", "--directory", "/Users/andyhaw/Veyra EHR/Vegre"],
+      "port": 4178
+    }
+  ]
+}

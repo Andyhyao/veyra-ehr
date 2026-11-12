@@ -1,0 +1,580 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-latin.woff2") format("woff2");
+      font-weight: 600 800;
+      font-style: normal;
+    }
+    /* The Veyra landing page at phone width, laid out to match the screen baked into hero-iphone.png.
+       Every block has a fixed height so the scroll stops below are exact. */
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f4f8ff 0%, #fafcff 60%, #f7f9fd 100%);
+      font-family: "Inter", sans-serif;
+      color: #0b1324;
+      -webkit-font-smoothing: antialiased;
+    }
+    #mb-scroll {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 402px;
+      height: 1465px;
+    }
+
+    /* hero copy */
+    .mb-eyebrow {
+      position: absolute;
+      left: 18px;
+      top: 100px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #56657c;
+    }
+    .mb-h1 {
+      position: absolute;
+      left: 16px;
+      top: 131px;
+      font-family: "Manrope", sans-serif;
+      font-size: 45px;
+      font-weight: 800;
+      line-height: 47px;
+      letter-spacing: -0.045em;
+      white-space: nowrap;
+    }
+    .mb-h1 span {
+      display: block;
+    }
+    .mb-h1 .grad {
+      background: linear-gradient(96deg, #2563eb 0%, #4f8bff 58%, #2563eb 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .mb-sub {
+      position: absolute;
+      left: 18px;
+      top: 244px;
+      width: 352px;
+      font-size: 17.5px;
+      line-height: 28px;
+      color: #475569;
+    }
+    .mb-btn {
+      position: absolute;
+      left: 18px;
+      width: 366px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 32px;
+      font-family: "Manrope", sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .mb-btn--blue {
+      top: 355px;
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 14px 26px -16px rgba(37, 99, 235, 0.8);
+    }
+    .mb-btn--line {
+      top: 437px;
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      color: #0b1324;
+    }
+    .mb-btn svg {
+      width: 18px;
+      height: 14px;
+    }
+    .mb-pillars {
+      position: absolute;
+      left: 18px;
+      top: 540px;
+      width: 366px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 32px;
+      column-gap: 26px;
+    }
+    .mb-pillars li {
+      list-style: none;
+      font-family: "Manrope", sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 24px;
+    }
+    .mb-pillars svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+      margin-bottom: 12px;
+      color: #2563eb;
+    }
+
+    /* dashboard preview */
+    #mb-card {
+      position: absolute;
+      left: 18px;
+      top: 773px;
+      width: 366px;
+      height: 454px;
+      border-radius: 18px;
+      background: #0f172a;
+      box-shadow: 0 30px 50px -30px rgba(15, 23, 42, 0.6);
+    }
+    .mb-tabs {
+      position: absolute;
+      left: 26px;
+      top: 24px;
+      display: flex;
+      gap: 6px;
+    }
+    .mb-tab {
+      position: relative;
+      height: 26px;
+      padding: 0 13px;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .mb-tab i {
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: #2563eb;
+    }
+    .mb-tab b {
+      position: relative;
+      font-weight: 600;
+    }
+    .mb-panels {
+      position: absolute;
+      left: 12px;
+      top: 60px;
+      width: 342px;
+      height: 374px;
+      border-radius: 12px;
+      background: #f8fafc;
+      overflow: hidden;
+    }
+    .mb-panel {
+      position: absolute;
+      inset: 0;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .w {
+      background: #ffffff;
+      border: 1px solid #e6ebf2;
+      border-radius: 10px;
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .kpi {
+      height: 70px;
+      padding: 10px 12px;
+    }
+    .kpi span {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .kpi b {
+      display: block;
+      margin-top: 2px;
+      font-family: "Manrope", sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .kpi em {
+      font-style: normal;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #166534;
+    }
+    .trend {
+      height: 110px;
+      padding: 10px 12px;
+    }
+    .w h4 {
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .trend svg {
+      display: block;
+      margin-top: 8px;
+      width: 290px;
+      height: 62px;
+    }
+    .list {
+      height: 150px;
+      padding: 8px 12px;
+    }
+    .li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      height: 40px;
+    }
+    .li + .li {
+      border-top: 1px solid #eef2f7;
+    }
+    .li time {
+      width: 38px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .ava {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      flex: none;
+      border-radius: 50%;
+      color: #ffffff;
+      font-size: 9.5px;
+      font-weight: 700;
+      font-style: normal;
+    }
+    .a1 { background: linear-gradient(145deg, #d0306f, #a3185a); }
+    .a2 { background: linear-gradient(145deg, #0f7c72, #0b5e57); }
+    .a3 { background: linear-gradient(145deg, #c2410c, #9a3412); }
+    .a4 { background: linear-gradient(145deg, #5b52ea, #4338ca); }
+    .li-txt {
+      flex: 1;
+      min-width: 0;
+    }
+    .li-txt b {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .li-txt span {
+      display: block;
+      font-size: 10px;
+      color: #56657c;
+    }
+    .tag {
+      height: 19px;
+      padding: 0 7px;
+      display: grid;
+      place-items: center;
+      border-radius: 99px;
+      font-size: 9.5px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .t-blue { background: #dfe8ff; color: #1d4ed8; }
+    .t-ok { background: #dcf5e6; color: #166534; }
+    .t-mute { background: #eef1f6; color: #475569; }
+    .t-warn { background: #fdecc8; color: #8a4b06; }
+    .search {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 11px;
+      color: #56657c;
+    }
+    .rows {
+      padding: 4px 12px;
+      height: 306px;
+    }
+    .rows .li {
+      height: 59px;
+    }
+    .days {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 6px;
+    }
+    .day {
+      height: 46px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 1px;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .day b {
+      font-size: 14px;
+      color: #0b1324;
+    }
+    .day.is-on {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+    .day.is-on b {
+      color: #ffffff;
+    }
+    .slots {
+      padding: 4px 12px;
+      height: 294px;
+    }
+    .slot {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 57px;
+    }
+    .slot + .slot {
+      border-top: 1px solid #eef2f7;
+    }
+    .slot time {
+      width: 38px;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .ev {
+      flex: 1;
+      height: 40px;
+      padding: 5px 10px;
+      border-radius: 8px;
+      border-left: 3px solid;
+    }
+    .ev b {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .ev span {
+      display: block;
+      font-size: 10px;
+      color: #475569;
+    }
+    .e1 { background: #eef3ff; border-color: #2563eb; }
+    .e2 { background: #e8f7f1; border-color: #0f7c72; }
+    .e3 { background: #fff1e8; border-color: #c2410c; }
+    .e4 { background: #f0efff; border-color: #5b52ea; }
+
+    /* fictional clinics strip */
+    .mb-trust {
+      position: absolute;
+      left: 18px;
+      top: 1259px;
+      width: 366px;
+      text-align: center;
+    }
+    .mb-trust p {
+      font-size: 13px;
+      line-height: 20px;
+      color: #56657c;
+    }
+    .mb-trust div {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 14px;
+      font-family: "Manrope", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    /* fixed chrome */
+    #mb-head {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 402px;
+      height: 80px;
+    }
+    #mb-headbg {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      background: rgba(244, 248, 255, 0.86);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      backdrop-filter: saturate(170%) blur(16px);
+      -webkit-backdrop-filter: saturate(170%) blur(16px);
+    }
+    .mb-logo {
+      position: absolute;
+      left: 18px;
+      top: 31px;
+      height: 33px;
+    }
+    .mb-burger {
+      position: absolute;
+      right: 18px;
+      top: 39px;
+      width: 32px;
+      height: 15px;
+    }
+    .mb-burger i {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 2px;
+      background: #0b1324;
+    }
+    #mb-bar {
+      position: absolute;
+      right: 3px;
+      top: 82px;
+      width: 3px;
+      height: 466px;
+      border-radius: 3px;
+      background: rgba(30, 41, 59, 0.38);
+      opacity: 0;
+    }
+  </style>
+
+  <div id="root" data-composition-id="mobile" data-width="402" data-height="874" data-layout-allow-overflow>
+    <div id="mb-scroll" data-layout-allow-overlap data-layout-allow-occlusion>
+      <p class="mb-eyebrow">01. EHR PLATFORM</p>
+      <h1 class="mb-h1"><span>Smarter Records.</span><span class="grad">Healthier Care.</span></h1>
+      <p class="mb-sub">Veyra streamlines medical data management with user-friendly interfaces for healthcare professionals.</p>
+      <span class="mb-btn mb-btn--blue">Request a demo <svg viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="mb-btn mb-btn--line">Watch video</span>
+      <ul class="mb-pillars">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Centralized<br />Patient Records</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="5" cy="17" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="19" cy="17" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>Better Care<br />Collaboration</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19v-6M12 19V5M19 19v-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Real-time<br />Insights</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6v6c0 4.4 2.9 7.7 7 9 4.1-1.3 7-4.6 7-9V6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Security<br />by design</li>
+      </ul>
+
+      <div id="mb-card">
+        <div class="mb-tabs">
+          <span class="mb-tab"><i id="tab-1"></i><b>Dashboard</b></span>
+          <span class="mb-tab"><i id="tab-2"></i><b>Patients</b></span>
+          <span class="mb-tab"><i id="tab-3"></i><b>Appts</b></span>
+        </div>
+        <div class="mb-panels">
+          <div class="mb-panel" id="pn-1">
+            <div class="kpis">
+              <div class="w kpi"><span>Patients</span><b>324</b><em>&uarr; 12%</em></div>
+              <div class="w kpi"><span>Visit completion</span><b>96%</b><em>&uarr; 4%</em></div>
+            </div>
+            <div class="w trend"><h4>Appointments trend</h4>
+              <svg viewBox="0 0 290 62" aria-hidden="true"><path d="M2 54 46 46 90 34 134 38 178 22 222 18 266 8 288 4" fill="none" stroke="#2563EB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="w list"><h4>Today&rsquo;s appointments</h4>
+              <div class="li"><time>9:00</time><i class="ava a1">SK</i><span class="li-txt"><b>Sarah Kim</b><span>Follow-up visit</span></span></div>
+              <div class="li"><time>10:00</time><i class="ava a2">MT</i><span class="li-txt"><b>Michael Torres</b><span>Annual exam</span></span></div>
+              <div class="li"><time>11:00</time><i class="ava a3">EC</i><span class="li-txt"><b>Emily Carter</b><span>Blood pressure check</span></span></div>
+            </div>
+          </div>
+          <div class="mb-panel" id="pn-2">
+            <div class="w search">Search patients</div>
+            <div class="w rows">
+              <div class="li"><i class="ava a4">AM</i><span class="li-txt"><b>Alex Morgan</b><span>PT-184203</span></span><span class="tag t-blue">In clinic</span></div>
+              <div class="li"><i class="ava a1">SK</i><span class="li-txt"><b>Sarah Kim</b><span>PT-118220</span></span><span class="tag t-ok">Follow-up</span></div>
+              <div class="li"><i class="ava a2">MT</i><span class="li-txt"><b>Michael Torres</b><span>PT-120457</span></span><span class="tag t-mute">Annual exam</span></div>
+              <div class="li"><i class="ava a3">EC</i><span class="li-txt"><b>Emily Carter</b><span>PT-131096</span></span><span class="tag t-warn">BP check</span></div>
+              <div class="li"><i class="ava a4">JW</i><span class="li-txt"><b>James Wong</b><span>PT-127314</span></span><span class="tag t-mute">Lab review</span></div>
+            </div>
+          </div>
+          <div class="mb-panel" id="pn-3">
+            <div class="days">
+              <div class="w day">Mon<b>27</b></div>
+              <div class="w day is-on">Tue<b>28</b></div>
+              <div class="w day">Wed<b>29</b></div>
+              <div class="w day">Thu<b>30</b></div>
+              <div class="w day">Fri<b>1</b></div>
+            </div>
+            <div class="w slots">
+              <div class="slot"><time>9:00</time><div class="ev e1"><b>Sarah Kim</b><span>Follow-up visit</span></div></div>
+              <div class="slot"><time>10:00</time><div class="ev e2"><b>Michael Torres</b><span>Annual exam</span></div></div>
+              <div class="slot"><time>11:00</time><div class="ev e3"><b>Emily Carter</b><span>Blood pressure check</span></div></div>
+              <div class="slot"><time>1:30</time><div class="ev e4"><b>James Wong</b><span>Lab results review</span></div></div>
+              <div class="slot"><time>3:00</time><div class="ev e1"><b>Alex Morgan</b><span>Care plan review</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-trust">
+        <p>Example clinic profiles &mdash; every organization named here is fictional</p>
+        <div><span>Northline Health</span><span>Carewell Clinics</span><span>Meridian Medical</span><span>Bayview Family Care</span><span>Oakhurst Group</span><span>Linden Pediatrics</span></div>
+      </div>
+    </div>
+
+    <header id="mb-head" data-layout-allow-overlap data-layout-allow-occlusion>
+      <span id="mb-headbg"></span>
+      <img class="mb-logo" src="assets/veyra-logo.svg" alt="Veyra" />
+      <span class="mb-burger" aria-hidden="true"><i style="top: 0"></i><i style="top: 11px"></i></span>
+    </header>
+
+    <span id="mb-bar"></span>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Scroll stops (points): top 0 → preview card 430 → clinics strip 591 (page 1465 tall in an 874 screen).
+    // The indicator thumb is 466 pt on a 782 pt track, so it travels 316 pt over 591 pt of scroll.
+    const MAX = 591;
+    const thumb = (s) => (s / MAX) * 316;
+
+    // resting state = the still image
+    tl.fromTo("#mb-scroll", { y: 0 }, { y: 0, duration: 0.01 }, 0);
+    tl.fromTo("#mb-bar", { y: 0, opacity: 0 }, { y: 0, opacity: 0, duration: 0.01 }, 0);
+    tl.fromTo("#mb-headbg", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 0);
+    tl.fromTo("#tab-1", { opacity: 1 }, { opacity: 1, duration: 0.01 }, 0);
+    tl.fromTo("#tab-2, #tab-3", { opacity: 0 }, { opacity: 0, duration: 0.01 }, 0);
+    tl.fromTo("#pn-1", { opacity: 1, x: 0 }, { opacity: 1, x: 0, duration: 0.01 }, 0);
+    tl.fromTo("#pn-2, #pn-3", { opacity: 0, x: 14 }, { opacity: 0, x: 14, duration: 0.01 }, 0);
+
+    const scroll = (at, from, to, dur) => {
+      tl.fromTo("#mb-scroll", { y: -from }, { y: -to, duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#mb-bar", { y: thumb(from) }, { y: thumb(to), duration: dur, ease: "power3.inOut", immediateRender: false }, at);
+      tl.fromTo("#mb-bar", { opacity: 0 }, { opacity: 1, duration: 0.18, ease: "power2.out", immediateRender: false }, at);
+      tl.fromTo("#mb-bar", { opacity: 1 }, { opacity: 0, duration: 0.3, ease: "power2.in", immediateRender: false }, at + dur + 0.45);
+    };
+
+    // tab n takes over from tab m: its pill fades in, its panel slides in from the right
+    const tab = (at, m, n) => {
+      tl.fromTo(`#tab-${m}`, { opacity: 1 }, { opacity: 0, duration: 0.25, ease: "power2.inOut", immediateRender: false }, at);
+      tl.fromTo(`#tab-${n}`, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "power2.inOut", immediateRender: false }, at);
+      tl.fromTo(`#pn-${m}`, { opacity: 1, x: 0 }, { opacity: 0, x: -14, duration: 0.25, ease: "power2.in", immediateRender: false }, at);
+      tl.fromTo(`#pn-${n}`, { opacity: 0, x: 14 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, at + 0.15);
+    };
+
+    // ── 1.3 the page scrolls up to the dashboard preview ──
+    scroll(1.3, 0, 430, 1.4);
+    tl.fromTo("#mb-headbg", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, 1.55);
+
+    // ── 3.1 the preview's tabs take a turn each ──
+    tab(3.1, 1, 2);
+    tab(4.5, 2, 3);
+    tab(5.9, 3, 1);
+    // the outgoing panels park back on the right once hidden, ready for the next pass
+    tl.fromTo("#pn-2", { x: -14 }, { x: 14, duration: 0.01, immediateRender: false }, 4.9);
+    tl.fromTo("#pn-3", { x: -14 }, { x: 14, duration: 0.01, immediateRender: false }, 6.3);
+
+    // ── 6.6 on to the fictional clinics strip ──
+    scroll(6.6, 430, MAX, 1.0);
+
+    // ── 9.0 back to the top ──
+    scroll(9.0, MAX, 0, 1.6);
+    tl.fromTo("#mb-headbg", { opacity: 1 }, { opacity: 0, duration: 0.35, ease: "power2.in", immediateRender: false }, 10.25);
+
+    window.__timelines["mobile"] = tl;
+  </script>
+</template>

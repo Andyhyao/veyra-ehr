@@ -1,0 +1,57 @@
+<!doctype html>
+<html
+  lang="en"
+  data-composition-variables='[{"id":"accent","type":"color","label":"Accent","default":"#2563EB"}]'
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=966, height=630" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      /* The MacBook screen cutout of hero-macbook.png: 966 × 630, inset 125 / 18. */
+      :root {
+        --accent: #2563eb;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 966px;
+        height: 630px;
+        overflow: hidden;
+        background: #e8edf5;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="10"
+      data-width="966"
+      data-height="630"
+    >
+      <div
+        id="analytics"
+        data-composition-id="analytics"
+        data-composition-src="compositions/analytics.html"
+        data-start="0"
+        data-duration="10"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="966"
+        data-height="630"
+      ></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

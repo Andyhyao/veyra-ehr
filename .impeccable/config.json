@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "motion-in-context/compositions/context.html"
+        ],
+        "createdAt": "2026-10-22T10:27:08.278Z",
+        "reason": "Claude: .row + .row is a 1px list divider on 52px-tall rows with vertically centred content (~10px clearance, verified in rendered frames); scanner reads it as flush"
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "motion-hero-mac/compositions/analytics.html"
+        ],
+        "createdAt": "2026-10-22T13:54:02.863Z",
+        "reason": "Claude: device-screen mock drawn at 1x to match the type scale baked into hero-macbook.png; it is shown inside a laptop frame, not read as page body text"
+      }
+    ]
+  }
+}

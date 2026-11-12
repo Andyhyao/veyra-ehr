@@ -1,0 +1,623 @@
+<template>
+  <style>
+    @font-face {
+      font-family: "Manrope";
+      src: url("assets/fonts/manrope-latin.woff2") format("woff2");
+      font-weight: 600 800;
+      font-style: normal;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      background: #f6f8fc;
+      font-family: "Inter", sans-serif;
+      color: #0b1324;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── sidebar ── */
+    #db-side {
+      width: 238px;
+      flex: none;
+      background: #0e1628;
+      padding: 30px 18px;
+    }
+    #db-brand {
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 27px;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+      padding-left: 12px;
+      margin-bottom: 34px;
+    }
+    #db-nav {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    #db-pill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 46px;
+      border-radius: 11px;
+      background: var(--accent);
+    }
+    .db-nav__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 46px;
+      padding: 0 14px 0 16px;
+      font-size: 15.5px;
+      font-weight: 600;
+      color: #c3ccdb;
+    }
+    .db-nav__item.is-on {
+      color: #ffffff;
+    }
+    #db-badge {
+      display: grid;
+      place-items: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 7px;
+      border-radius: 99px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ── main ── */
+    #db-main {
+      flex: 1;
+      min-width: 0;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    #db-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 42px;
+    }
+    #db-title {
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 30px;
+      letter-spacing: -0.035em;
+    }
+    #db-range {
+      padding: 9px 16px;
+      border: 1px solid #dde3ec;
+      border-radius: 99px;
+      background: #ffffff;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .db-card {
+      background: #ffffff;
+      border: 1px solid #e8edf5;
+      border-radius: 16px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 24px -18px rgba(15, 23, 42, 0.18);
+    }
+    .db-card h3 {
+      font-family: "Manrope", sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    /* KPIs */
+    #db-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .kpi {
+      height: 118px;
+      padding: 18px 20px;
+    }
+    .kpi__label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #475569;
+    }
+    .kpi__val {
+      display: flex;
+      align-items: flex-start;
+      margin: 6px 0 6px;
+      height: 40px;
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 35px;
+      line-height: 40px;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+    }
+    .odo {
+      display: inline-block;
+      height: 40px;
+      overflow: hidden;
+    }
+    .odo__col {
+      display: flex;
+      flex-direction: column;
+    }
+    .odo__col i {
+      display: block;
+      height: 40px;
+      font-style: normal;
+    }
+    .kpi__unit {
+      margin-left: 7px;
+    }
+    .kpi__delta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #15803d;
+    }
+    .kpi__delta svg {
+      width: 13px;
+      height: 13px;
+    }
+    .kpi__delta.is-down {
+      color: var(--accent);
+    }
+
+    /* row */
+    #db-row {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1.38fr 1fr;
+      gap: 16px;
+    }
+    #db-chart {
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .db-chart__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .db-chart__key {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .db-chart__key i {
+      width: 14px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+    #db-plot {
+      position: relative;
+      width: 471px;
+      height: 456px;
+    }
+    #db-plot svg {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+    }
+    .db-axis {
+      display: flex;
+      justify-content: space-between;
+      width: 471px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    /* hover readout */
+    #hov-x {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 456px;
+    }
+    .hov__guide {
+      position: absolute;
+      left: -0.5px;
+      top: 0;
+      width: 1px;
+      height: 456px;
+      background: linear-gradient(#2563eb00, #2563eb55 30%, #2563eb55);
+    }
+    #hov-y {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .hov__ring {
+      position: absolute;
+      left: -11px;
+      top: -11px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(37, 99, 235, 0.16);
+    }
+    .hov__tip {
+      position: absolute;
+      left: -62px;
+      bottom: 20px;
+      width: 124px;
+      padding: 9px 12px;
+      border-radius: 11px;
+      background: #0e1628;
+      color: #ffffff;
+      box-shadow: 0 12px 24px -12px rgba(15, 23, 42, 0.5);
+    }
+    .hov__mask {
+      height: 40px;
+      overflow: hidden;
+    }
+    .hov__entry {
+      height: 40px;
+    }
+    .hov__entry span {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #aab6c9;
+      line-height: 16px;
+    }
+    .hov__entry b {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      line-height: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    /* appointments */
+    #db-appts {
+      padding: 22px 24px;
+    }
+    #ap-list {
+      position: relative;
+      margin-top: 14px;
+    }
+    #ap-hl {
+      position: absolute;
+      left: -10px;
+      right: -10px;
+      top: 0;
+      height: 78px;
+      border-radius: 12px;
+      background: #eff4ff;
+    }
+    .ap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 78px;
+    }
+    .ap__time {
+      width: 70px;
+      flex: none;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #475569;
+      font-variant-numeric: tabular-nums;
+    }
+    .ap__ava {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      flex: none;
+      margin-right: 12px;
+      border-radius: 50%;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      font-style: normal;
+    }
+    .ava--1 { background: linear-gradient(145deg, #d0306f, #a3185a); }
+    .ava--2 { background: linear-gradient(145deg, #0f7c72, #0b5e57); }
+    .ava--3 { background: linear-gradient(145deg, #c2410c, #9a3412); }
+    .ava--4 { background: linear-gradient(145deg, #5b52ea, #4338ca); }
+    .ava--5 { background: linear-gradient(145deg, #2f6bef, #1d4ed8); }
+    .ava--6 { background: linear-gradient(145deg, #8b3dd9, #6b21a8); }
+    .ap__who b {
+      display: block;
+      font-size: 15.5px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .ap__who span {
+      display: block;
+      margin-top: 2px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #56657c;
+    }
+    .ap__chip {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      margin-top: -12px;
+      height: 24px;
+      padding: 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .ap__chip svg {
+      width: 11px;
+      height: 11px;
+    }
+    .chip--in {
+      background: #dbe6ff;
+      color: #1d4ed8;
+    }
+    .chip--done {
+      background: #dcf5e6;
+      color: #166534;
+    }
+  </style>
+
+  <div data-hf-id="hf-cnk1" id="root" data-composition-id="dashboard" data-width="1210" data-height="834">
+    <aside data-hf-id="hf-jfju" id="db-side">
+      <div data-hf-id="hf-6hqc" id="db-brand">veyra</div>
+      <nav data-hf-id="hf-isgt" id="db-nav">
+        <span data-hf-id="hf-crfo" id="db-pill"></span>
+        <div data-hf-id="hf-p06u" class="db-nav__item is-on" id="nav-1">Dashboard</div>
+        <div data-hf-id="hf-1bmh" class="db-nav__item" id="nav-2">Patients</div>
+        <div data-hf-id="hf-cydk" class="db-nav__item" id="nav-3">Appointments</div>
+        <div data-hf-id="hf-pkxt" class="db-nav__item" id="nav-4">Messages <span data-hf-id="hf-l6sj" id="db-badge">3</span></div>
+        <div data-hf-id="hf-gf9u" class="db-nav__item" id="nav-5">Care team</div>
+        <div data-hf-id="hf-kwwh" class="db-nav__item" id="nav-6">Analytics</div>
+        <div data-hf-id="hf-fctj" class="db-nav__item" id="nav-7">Settings</div>
+      </nav>
+    </aside>
+
+    <main data-hf-id="hf-h0mj" id="db-main">
+      <header data-hf-id="hf-ng5m" id="db-head">
+        <h1 data-hf-id="hf-sn47" id="db-title">Clinic overview</h1>
+        <span data-hf-id="hf-q8qi" id="db-range">Last 30 days</span>
+      </header>
+
+      <section data-hf-id="hf-c6g5" id="db-kpis">
+        <div data-hf-id="hf-zveb" class="db-card kpi" id="kpi-1">
+          <p data-hf-id="hf-v1oz" class="kpi__label">Patients</p>
+          <div data-hf-id="hf-tu90" class="kpi__val" data-layout-allow-overflow>
+            <span data-hf-id="hf-wtt6" class="odo" data-layout-ignore><span data-hf-id="hf-3ipp" class="odo__col" id="k1-a"><i data-hf-id="hf-9iec">0</i><i data-hf-id="hf-943b">1</i><i data-hf-id="hf-8psa">2</i><i data-hf-id="hf-8bh9">3</i><i data-hf-id="hf-b3mg">4</i><i data-hf-id="hf-apbf">5</i><i data-hf-id="hf-ab0e">6</i><i data-hf-id="hf-9wpd">7</i><i data-hf-id="hf-couk">8</i><i data-hf-id="hf-cajj">9</i></span></span>
+            <span data-hf-id="hf-wkoe" class="odo" data-layout-ignore><span data-hf-id="hf-7gtq" class="odo__col" id="k1-b"><i data-hf-id="hf-td0c">0</i><i data-hf-id="hf-9cdz">1</i><i data-hf-id="hf-hqa6">2</i><i data-hf-id="hf-ckz5">3</i><i data-hf-id="hf-64q8">4</i><i data-hf-id="hf-gfpn">5</i><i data-hf-id="hf-cvmq">6</i><i data-hf-id="hf-2lhh">7</i><i data-hf-id="hf-fdgk">8</i><i data-hf-id="hf-t7fj">9</i></span></span>
+            <span data-hf-id="hf-wyzf" class="odo" data-layout-ignore><span data-hf-id="hf-bexr" class="odo__col" id="k1-c"><i data-hf-id="hf-s639">0</i><i data-hf-id="hf-8y2y">1</i><i data-hf-id="hf-i4l7">2</i><i data-hf-id="hf-drw8">3</i><i data-hf-id="hf-4xt5">4</i><i data-hf-id="hf-g1em">5</i><i data-hf-id="hf-d9xr">6</i><i data-hf-id="hf-3sek">7</i><i data-hf-id="hf-e6jh">8</i><i data-hf-id="hf-st4i">9</i></span></span>
+          </div>
+          <p data-hf-id="hf-ujiy" class="kpi__delta" id="kd-1"><svg data-hf-id="hf-0bxi" viewBox="0 0 12 12" aria-hidden="true"><path data-hf-id="hf-qnxz" d="M6 10.5V1.8M2.2 5.4 6 1.6l3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>12%</p>
+        </div>
+        <div data-hf-id="hf-ozwo" class="db-card kpi" id="kpi-2">
+          <p data-hf-id="hf-341a" class="kpi__label">Visit completion</p>
+          <div data-hf-id="hf-9cf0" class="kpi__val" data-layout-allow-overflow>
+            <span data-hf-id="hf-xdag" class="odo" data-layout-ignore><span data-hf-id="hf-hgk6" class="odo__col" id="k2-a"><i data-hf-id="hf-skea">0</i><i data-hf-id="hf-8jrx">1</i><i data-hf-id="hf-iiw8">2</i><i data-hf-id="hf-ddl7">3</i><i data-hf-id="hf-5c46">4</i><i data-hf-id="hf-fn3l">5</i><i data-hf-id="hf-do8s">6</i><i data-hf-id="hf-3e3j">7</i><i data-hf-id="hf-ekui">8</i><i data-hf-id="hf-seth">9</i></span></span>
+            <span data-hf-id="hf-ul59" class="odo" data-layout-ignore><span data-hf-id="hf-dig5" class="odo__col" id="k2-b"><i data-hf-id="hf-ujxf">0</i><i data-hf-id="hf-bbx4">1</i><i data-hf-id="hf-fqr1">2</i><i data-hf-id="hf-be22">3</i><i data-hf-id="hf-4573">4</i><i data-hf-id="hf-f8sk">5</i><i data-hf-id="hf-e2jt">6</i><i data-hf-id="hf-4l0m">7</i><i data-hf-id="hf-gkdn">8</i><i data-hf-id="hf-v6yo">9</i></span></span>
+            <span data-hf-id="hf-nccs">%</span>
+          </div>
+          <p data-hf-id="hf-qxps" class="kpi__delta" id="kd-2"><svg data-hf-id="hf-dzoq" viewBox="0 0 12 12" aria-hidden="true"><path data-hf-id="hf-l707" d="M6 10.5V1.8M2.2 5.4 6 1.6l3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>4%</p>
+        </div>
+        <div data-hf-id="hf-prkh" class="db-card kpi" id="kpi-3">
+          <p data-hf-id="hf-79jv" class="kpi__label">Active patients</p>
+          <div data-hf-id="hf-85hx" class="kpi__val" data-layout-allow-overflow>
+            <span data-hf-id="hf-uzga" class="odo" data-layout-ignore><span data-hf-id="hf-oe3n" class="odo__col" id="k3-a"><i data-hf-id="hf-uy8g">0</i><i data-hf-id="hf-axm3">1</i><i data-hf-id="hf-g522">2</i><i data-hf-id="hf-azr1">3</i><i data-hf-id="hf-4ji4">4</i><i data-hf-id="hf-euhj">5</i><i data-hf-id="hf-eguu">6</i><i data-hf-id="hf-46pl">7</i><i data-hf-id="hf-gyoo">8</i><i data-hf-id="hf-usnn">9</i></span></span>
+            <span data-hf-id="hf-jrlj">,</span>
+            <span data-hf-id="hf-vdrb" class="odo" data-layout-ignore><span data-hf-id="hf-dim0" class="odo__col" id="k3-b"><i data-hf-id="hf-trbd">0</i><i data-hf-id="hf-ajb2">1</i><i data-hf-id="hf-gjd3">2</i><i data-hf-id="hf-c6o4">3</i><i data-hf-id="hf-3cl1">4</i><i data-hf-id="hf-eg6i">5</i><i data-hf-id="hf-ev5v">6</i><i data-hf-id="hf-5dmo">7</i><i data-hf-id="hf-frrl">8</i><i data-hf-id="hf-uecm">9</i></span></span>
+            <span data-hf-id="hf-vs2c" class="odo" data-layout-ignore><span data-hf-id="hf-ea9t" class="odo__col" id="k3-c"><i data-hf-id="hf-u5me">0</i><i data-hf-id="hf-a501">1</i><i data-hf-id="hf-gxo4">2</i><i data-hf-id="hf-bsd3">3</i><i data-hf-id="hf-3qw2">4</i><i data-hf-id="hf-e1vh">5</i><i data-hf-id="hf-f9gw">6</i><i data-hf-id="hf-4zbn">7</i><i data-hf-id="hf-g62m">8</i><i data-hf-id="hf-u01l">9</i></span></span>
+            <span data-hf-id="hf-zctl" class="odo" data-layout-ignore><span data-hf-id="hf-5mdy" class="odo__col" id="k3-d"><i data-hf-id="hf-ps93">0</i><i data-hf-id="hf-cx58">1</i><i data-hf-id="hf-kifd">2</i><i data-hf-id="hf-g5qe">3</i><i data-hf-id="hf-2jyz">4</i><i data-hf-id="hf-k0gw">5</i><i data-hf-id="hf-9avh">6</i><i data-hf-id="hf-vrd6">7</i><i data-hf-id="hf-i5lr">8</i><i data-hf-id="hf-qfac">9</i></span></span>
+          </div>
+          <p data-hf-id="hf-ovt6" class="kpi__delta" id="kd-3"><svg data-hf-id="hf-edzr" viewBox="0 0 12 12" aria-hidden="true"><path data-hf-id="hf-ksp6" d="M6 10.5V1.8M2.2 5.4 6 1.6l3.8 3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>10%</p>
+        </div>
+        <div data-hf-id="hf-h3om" class="db-card kpi" id="kpi-4">
+          <p data-hf-id="hf-1n3h" class="kpi__label">Avg. wait time</p>
+          <div data-hf-id="hf-8jsy" class="kpi__val" data-layout-allow-overflow>
+            <span data-hf-id="hf-zr4m" class="odo" data-layout-ignore><span data-hf-id="hf-9dr0" class="odo__col" id="k4-a"><i data-hf-id="hf-q6k4">0</i><i data-hf-id="hf-ciu7">1</i><i data-hf-id="hf-kwqe">2</i><i data-hf-id="hf-frfd">3</i><i data-hf-id="hf-2ya0">4</i><i data-hf-id="hf-jm5v">5</i><i data-hf-id="hf-9p6i">6</i><i data-hf-id="hf-vd25">7</i><i data-hf-id="hf-ijws">8</i><i data-hf-id="hf-q0zb">9</i></span></span>
+            <span data-hf-id="hf-s52y" class="odo" data-layout-ignore><span data-hf-id="hf-k98n" class="odo__col" id="k4-b"><i data-hf-id="hf-pwlg">0</i><i data-hf-id="hf-fqkl">1</i><i data-hf-id="hf-gmze">2</i><i data-hf-id="hf-cw43">3</i><i data-hf-id="hf-5juo">4</i><i data-hf-id="hf-tq3l">5</i><i data-hf-id="hf-p1zq">6</i><i data-hf-id="hf-db8v">7</i><i data-hf-id="hf-su64">8</i><i data-hf-id="hf-wnjx">9</i></span></span>
+            <span data-hf-id="hf-8q73" class="kpi__unit">min</span>
+          </div>
+          <p data-hf-id="hf-xsf5" class="kpi__delta is-down" id="kd-4"><svg data-hf-id="hf-esas" viewBox="0 0 12 12" aria-hidden="true"><path data-hf-id="hf-sg9d" d="M6 1.5v8.7M2.2 6.6 6 10.4l3.8-3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>20%</p>
+        </div>
+      </section>
+
+      <section data-hf-id="hf-pkh0" id="db-row">
+        <div data-hf-id="hf-kp6a" class="db-card" id="db-chart">
+          <div data-hf-id="hf-1i39" class="db-chart__head">
+            <h3 data-hf-id="hf-ugx1">Appointments trend</h3>
+            <span data-hf-id="hf-i49q" class="db-chart__key"><i data-hf-id="hf-wt6k"></i>Visits per day</span>
+          </div>
+          <div data-hf-id="hf-ggiu" id="db-plot" data-layout-allow-overflow>
+            <svg data-hf-id="hf-h2jd" viewBox="0 0 471 456" width="471" height="456" aria-hidden="true">
+              <defs data-hf-id="hf-mh0t">
+                <linearGradient data-hf-id="hf-nrr1" id="ch-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop data-hf-id="hf-7fq7" offset="0" stop-color="#2563EB" stop-opacity="0.16" />
+                  <stop data-hf-id="hf-t1q5" offset="1" stop-color="#2563EB" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <g data-hf-id="hf-4cwh" id="ch-grid" stroke="#EDF1F7" stroke-width="1.2">
+                <line data-hf-id="hf-8yn4" class="ch-gl" x1="0" y1="114" x2="471" y2="114" />
+                <line data-hf-id="hf-0wl8" class="ch-gl" x1="0" y1="228" x2="471" y2="228" />
+                <line data-hf-id="hf-dczq" class="ch-gl" x1="0" y1="342" x2="471" y2="342" />
+                <line data-hf-id="hf-jlps" class="ch-gl" x1="0" y1="455" x2="471" y2="455" />
+              </g>
+              <path data-hf-id="hf-npm2"
+                id="ch-area"
+                d="M8 392 L72 369 L140 337 L206 344 L272 287 L338 267 L404 235 L466 205 L466 455 L8 455 Z"
+                fill="url(#ch-fill)"
+              />
+              <path data-hf-id="hf-xk5o"
+                id="ch-line"
+                d="M8 392 L72 369 L140 337 L206 344 L272 287 L338 267 L404 235 L466 205"
+                pathLength="1"
+                stroke-dasharray="1"
+                stroke-dashoffset="1"
+                fill="none"
+                stroke="#2563EB"
+                stroke-width="3.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle data-hf-id="hf-p8iw" class="ch-dot" id="ch-dot-1" cx="140" cy="337" r="6" fill="#ffffff" stroke="#2563EB" stroke-width="3" />
+              <circle data-hf-id="hf-aqqr" class="ch-dot" id="ch-dot-2" cx="272" cy="287" r="6" fill="#ffffff" stroke="#2563EB" stroke-width="3" />
+              <circle data-hf-id="hf-txye" class="ch-dot" id="ch-dot-3" cx="404" cy="235" r="6" fill="#ffffff" stroke="#2563EB" stroke-width="3" />
+            </svg>
+            <div data-hf-id="hf-d0pb" id="hov-x">
+              <span data-hf-id="hf-hifu" class="hov__guide"></span>
+              <div data-hf-id="hf-92la" id="hov-y">
+                <span data-hf-id="hf-rfq4" class="hov__ring"></span>
+                <div data-hf-id="hf-z6so" class="hov__tip">
+                  <div data-hf-id="hf-r9xo" class="hov__mask" data-layout-ignore>
+                    <div data-hf-id="hf-e6c8" id="hov-roll">
+                      <p data-hf-id="hf-zslw" class="hov__entry"><span data-hf-id="hf-vs0h">Apr 9</span><b data-hf-id="hf-1els">14 visits</b></p>
+                      <p data-hf-id="hf-kbe4" class="hov__entry"><span data-hf-id="hf-c5sa">Apr 17</span><b data-hf-id="hf-vdyf">17 visits</b></p>
+                      <p data-hf-id="hf-j4h1" class="hov__entry"><span data-hf-id="hf-9usv">Apr 25</span><b data-hf-id="hf-1hk5">19 visits</b></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div data-hf-id="hf-kkui" class="db-axis" id="db-axis"><span data-hf-id="hf-yygp">Apr 1</span><span data-hf-id="hf-w6bi">Apr 8</span><span data-hf-id="hf-cyec">Apr 15</span><span data-hf-id="hf-b1py">Apr 22</span><span data-hf-id="hf-89kr">Apr 29</span></div>
+        </div>
+
+        <div data-hf-id="hf-s4to" class="db-card" id="db-appts">
+          <h3 data-hf-id="hf-8eb9">Today&rsquo;s appointments</h3>
+          <div data-hf-id="hf-njnj" id="ap-list">
+            <span data-hf-id="hf-ma3m" id="ap-hl"></span>
+            <div data-hf-id="hf-3bg8" class="ap" id="ap-1">
+              <span data-hf-id="hf-dyde" class="ap__time">9:00 AM</span><i data-hf-id="hf-ikps" class="ap__ava ava--1">SK</i>
+              <span data-hf-id="hf-c458" class="ap__who"><b data-hf-id="hf-67uf">Sarah Kim</b><span data-hf-id="hf-91yx">Follow-up visit</span></span>
+              <span data-hf-id="hf-gnsc" class="ap__chip chip--in" id="ap-1-in">Checked in</span>
+              <span data-hf-id="hf-bge2" class="ap__chip chip--done" id="ap-1-done"><svg data-hf-id="hf-f6lt" viewBox="0 0 12 12" aria-hidden="true"><path data-hf-id="hf-rv6x" d="m2 6.4 2.6 2.5L10 3.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Done</span>
+            </div>
+            <div data-hf-id="hf-bzc3" class="ap" id="ap-2">
+              <span data-hf-id="hf-zvkm" class="ap__time">10:00 AM</span><i data-hf-id="hf-b2nc" class="ap__ava ava--2">MT</i>
+              <span data-hf-id="hf-781g" class="ap__who"><b data-hf-id="hf-g3zf">Michael Torres</b><span data-hf-id="hf-5l19">Annual exam</span></span>
+              <span data-hf-id="hf-tjgp" class="ap__chip chip--in" id="ap-2-in">Checked in</span>
+            </div>
+            <div data-hf-id="hf-8182" class="ap" id="ap-3">
+              <span data-hf-id="hf-xjuh" class="ap__time">11:00 AM</span><i data-hf-id="hf-zmd0" class="ap__ava ava--3">EC</i>
+              <span data-hf-id="hf-614d" class="ap__who"><b data-hf-id="hf-13pi">Emily Carter</b><span data-hf-id="hf-4stu">Blood pressure check</span></span>
+            </div>
+            <div data-hf-id="hf-p9id" class="ap" id="ap-4">
+              <span data-hf-id="hf-0r2i" class="ap__time">1:30 PM</span><i data-hf-id="hf-o16g" class="ap__ava ava--4">JW</i>
+              <span data-hf-id="hf-6ffe" class="ap__who"><b data-hf-id="hf-srac">James Wong</b><span data-hf-id="hf-wrhe">Lab results review</span></span>
+            </div>
+            <div data-hf-id="hf-ohuk" class="ap" id="ap-5">
+              <span data-hf-id="hf-vsbf" class="ap__time">2:30 PM</span><i data-hf-id="hf-l58l" class="ap__ava ava--5">RC</i>
+              <span data-hf-id="hf-8eyj" class="ap__who"><b data-hf-id="hf-s7h3">Robert Chen</b><span data-hf-id="hf-iqp3">Check-up</span></span>
+            </div>
+            <div data-hf-id="hf-zdc7" class="ap" id="ap-6">
+              <span data-hf-id="hf-4e5o" class="ap__time">3:30 PM</span><i data-hf-id="hf-ev9h" class="ap__ava ava--6">LT</i>
+              <span data-hf-id="hf-8t9k" class="ap__who"><b data-hf-id="hf-sdcp">Lisa Tan</b><span data-hf-id="hf-lkmu">Blood pressure check</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const tl = gsap.timeline({ paused: true });
+
+    // Odometer: each column holds 0–9, so the digit d sits at yPercent -10·d.
+    const roll = (id, d, at) =>
+      tl.fromTo(id, { yPercent: 0 }, { yPercent: -10 * d, duration: 1.15, ease: "expo.out" }, at);
+
+    // ── 0.0 shell → nav builds ──
+    tl.fromTo(
+      ".db-nav__item",
+      { opacity: 0, x: -8 },
+      { opacity: 1, x: 0, duration: 0.5, ease: "expo.out", stagger: 0.045 },
+      0.1,
+    );
+    tl.fromTo("#db-pill", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.6, ease: "expo.out" }, 0.3);
+    tl.fromTo("#db-badge", { opacity: 0, scale: 0.6 }, { opacity: 0, scale: 0.6, duration: 0.01 }, 0);
+
+    // ── 0.45 header ──
+    tl.fromTo("#db-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.45);
+    tl.fromTo("#db-range", { opacity: 0, x: 10 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, 0.6);
+
+    // ── 0.7 KPI cards land, digits roll right to left ──
+    tl.fromTo(".kpi", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, ease: "expo.out", stagger: 0.07 }, 0.7);
+    roll("#k1-c", 4, 0.85); roll("#k1-b", 2, 0.91); roll("#k1-a", 3, 0.97);
+    roll("#k2-b", 6, 0.92); roll("#k2-a", 9, 0.98);
+    roll("#k3-d", 3, 0.99); roll("#k3-c", 4, 1.05); roll("#k3-b", 2, 1.11); roll("#k3-a", 1, 1.17);
+    roll("#k4-b", 8, 1.06); roll("#k4-a", 1, 1.12);
+    tl.fromTo(".kpi__delta", { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.07 }, 1.55);
+
+    // ── 1.2 chart draws ──
+    tl.fromTo("#db-chart, #db-appts", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out", stagger: 0.1 }, 1.15);
+    tl.fromTo(".ch-gl", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.7, ease: "power3.out", stagger: 0.05 }, 1.3);
+    tl.fromTo("#ch-line", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.3, ease: "power2.inOut" }, 1.45);
+    tl.fromTo("#ch-area", { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" }, { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", duration: 1.3, ease: "power2.inOut" }, 1.45);
+    tl.fromTo(".ch-dot", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.45, ease: "expo.out", stagger: 0.36 }, 1.85);
+    tl.fromTo("#db-axis", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "power2.out" }, 1.6);
+
+    // ── 1.5 appointments list ──
+    tl.fromTo(".ap", { opacity: 0, x: 12 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out", stagger: 0.06 }, 1.5);
+    tl.fromTo("#ap-hl", { opacity: 0, y: 0 }, { opacity: 0, y: 0, duration: 0.01 }, 0);
+    tl.fromTo(".ap__chip", { opacity: 0, x: 6 }, { opacity: 0, x: 6, duration: 0.01 }, 0);
+
+    // ── 2.9–7.4 the product working: hover readout walks the chart ──
+    tl.fromTo("#hov-x", { opacity: 0, x: 140 }, { opacity: 1, x: 140, duration: 0.3, ease: "power2.out" }, 2.9);
+    tl.fromTo("#hov-y", { y: 337 }, { y: 337, duration: 0.01 }, 0);
+    tl.fromTo(".hov__tip", { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, ease: "expo.out" }, 2.98);
+    tl.fromTo("#hov-roll", { yPercent: 0 }, { yPercent: 0, duration: 0.01 }, 0);
+
+    tl.fromTo("#hov-x", { x: 140 }, { x: 272, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 4.0);
+    tl.fromTo("#hov-y", { y: 337 }, { y: 287, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 4.0);
+    tl.fromTo("#hov-roll", { yPercent: 0 }, { yPercent: -100 / 3, duration: 0.45, ease: "power3.inOut", immediateRender: false }, 4.05);
+
+    tl.fromTo("#hov-x", { x: 272 }, { x: 404, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 5.3);
+    tl.fromTo("#hov-y", { y: 287 }, { y: 235, duration: 0.55, ease: "power3.inOut", immediateRender: false }, 5.3);
+    tl.fromTo("#hov-roll", { yPercent: -100 / 3 }, { yPercent: -200 / 3, duration: 0.45, ease: "power3.inOut", immediateRender: false }, 5.35);
+
+    tl.fromTo("#hov-x", { opacity: 1 }, { opacity: 0, duration: 0.22, ease: "power2.in", immediateRender: false }, 7.5);
+
+    // ── the day moves: Sarah checks in, finishes, Michael checks in ──
+    tl.fromTo("#ap-hl", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, 3.3);
+    tl.fromTo("#ap-1-in", { opacity: 0, x: 6 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, 3.45);
+    tl.fromTo("#db-badge", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "expo.out", immediateRender: false }, 4.5);
+
+    tl.fromTo("#ap-1-in", { opacity: 1, x: 0 }, { opacity: 0, x: -4, duration: 0.15, ease: "power2.in", immediateRender: false }, 6.0);
+    tl.fromTo("#ap-1-done", { opacity: 0, x: 6 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out", immediateRender: false }, 6.1);
+    tl.fromTo("#k1-c", { yPercent: -40 }, { yPercent: -50, duration: 0.5, ease: "power3.inOut", immediateRender: false }, 6.2);
+    tl.fromTo("#ap-hl", { y: 0 }, { y: 78, duration: 0.6, ease: "power3.inOut", immediateRender: false }, 6.3);
+    tl.fromTo("#ap-2-in", { opacity: 0, x: 6 }, { opacity: 1, x: 0, duration: 0.45, ease: "expo.out", immediateRender: false }, 6.75);
+
+    // ── 9.3 clear back to the shell, so the loop restarts on frame 0 ──
+    tl.fromTo("#db-row, #db-kpis, #db-head", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.4, ease: "power3.in", stagger: 0.05, immediateRender: false }, 9.2);
+    tl.fromTo(".db-nav__item", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(6px)", duration: 0.35, ease: "power3.in", stagger: 0.02, immediateRender: false }, 9.35);
+    tl.fromTo("#db-pill", { scaleX: 1 }, { scaleX: 0, duration: 0.4, ease: "power3.in", immediateRender: false }, 9.3);
+
+    window.__timelines["dashboard"] = tl;
+  </script>
+</template>
