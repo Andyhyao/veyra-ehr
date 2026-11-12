@@ -31,3 +31,5 @@ motion-*/renders/
 
 # tool caches (the impeccable config itself is tracked; its cache is not)
 hook.cache.json
+.vercel
+.env*
