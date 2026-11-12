@@ -212,6 +212,13 @@ fictional demo rows. Its styles are prefixed `record-`.
   `og:image`, `og:url` and `rel=canonical` need the real origin, so the three
   absolute-url lines are marked TODO and two are commented out until there is a
   domain to put in them.
+- **Icons**: `favicon.svg` for modern browsers, `favicon-32.png` for Safari
+  before 16, and `apple-touch-icon.png` (180px) for iOS home screens. All three
+  are rasterised from the same SVG, so regenerate them together.
+- **Brand blues come from tokens**, including inside `linear-gradient()` — there
+  are no literal `#2563EB` or `#1D4ED8` outside the `:root` block, so retheming
+  is a one-line change. The lighter one-off blues in the device mockups
+  (`#4F8BFF`, `#9EC0FF`, and so on) are deliberately literal.
 - CSS and JS are loaded with a `?v=` query. Bump it when you edit them, or a
   browser that cached the old file will keep serving it.
 
