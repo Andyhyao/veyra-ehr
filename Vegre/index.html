@@ -7,11 +7,28 @@
 <meta name="description" content="Veyra streamlines medical data management with user-friendly interfaces, enabling healthcare professionals to access, update, and monitor patient records efficiently.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#2563EB">
+
+<!-- Social cards. og:image and og:url must be ABSOLUTE urls to work with most scrapers, and
+     rel=canonical needs the real origin, so set the three marked lines once the domain is known. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Veyra">
+<meta property="og:title" content="Veyra — Smarter Records. Healthier Care.">
+<meta property="og:description" content="An EHR concept built around one patient timeline: charting, scheduling, prescribing and billing all write to the same record.">
+<meta property="og:image" content="assets/img/og-cover.jpg"><!-- TODO: absolute url -->
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Veyra practice analytics screen open on a laptop.">
+<!-- <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
+<!-- <link rel="canonical" href="https://YOUR-DOMAIN/"> -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Veyra — Smarter Records. Healthier Care.">
+<meta name="twitter:description" content="An EHR concept built around one patient timeline: charting, scheduling, prescribing and billing all write to the same record.">
+<meta name="twitter:image" content="assets/img/og-cover.jpg"><!-- TODO: absolute url -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add("js")</script>
-<link rel="stylesheet" href="assets/css/style.css?v=40">
+<link rel="stylesheet" href="assets/css/style.css?v=42">
 <link rel="stylesheet" href="assets/css/tw.css?v=2">
 <link rel="stylesheet" href="assets/css/lenis.css?v=1.3.26">
 </head>
@@ -146,7 +163,7 @@
       </div>
 
       <div class="stage__phone">
-        <img class="stage__img" src="assets/img/hero-iphone.png" width="450" height="920"
+        <img class="stage__img" src="assets/img/hero-iphone.webp" width="450" height="920"
              alt="The Veyra site at phone width, with the hero stacked for a small screen">
         <span class="stage__glass" aria-hidden="true"></span>
         <video class="stage__screen" muted loop playsinline preload="none" width="402" height="874" aria-hidden="true">
@@ -697,7 +714,7 @@
       <p class="tw:js:motion-safe:opacity-0" data-stagger-item>See Veyra against your own workflows. A 30-minute walkthrough with a clinical specialist — no slide deck.</p>
     </div>
     <form class="cta__form tw:js:motion-safe:opacity-0" data-stagger-item novalidate>
-      <label class="cta__field"><span class="sr">Work email</span><input type="email" name="email" placeholder="you@clinic.com" required></label>
+      <label class="cta__field"><span class="sr">Work email</span><input type="email" name="email" autocomplete="email" placeholder="you@clinic.com" required></label>
       <button class="btn btn--dark btn--lg tw:press" data-press type="submit">Request a demo <svg class="arr" viewBox="0 0 16 12" aria-hidden="true"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <p class="cta__note" data-note role="status" aria-live="polite">Veyra is a product concept. This form is part of the demo &mdash; it doesn&rsquo;t send anywhere.</p>
     </form>
@@ -713,14 +730,14 @@
       <p>The electronic health record built around the patient timeline — and the people reading it.</p>
     </div>
     <div class="ftr__cols">
-      <div><h4>Product</h4><a href="#product">Charting</a><a href="#platform" data-plat-tab="appointments">Scheduling</a><a href="#product" data-record-open="meds">e-Prescribing</a><a href="#platform" data-plat-tab="analytics">Analytics</a><a href="#showcase">In practice</a></div>
-      <div><h4>Solutions</h4><a href="#product">Primary care</a><a href="#platform">Specialty clinics</a><a href="#workflow">Multi-site groups</a><a href="#security">Behavioral health</a></div>
-      <div><h4>Resources</h4><a href="#security">Security</a><a href="#workflow">Implementation</a><a href="#trust-proof">Why trust Veyra</a><a href="#showcase">In practice</a></div>
-      <div><h4>Company</h4><a href="404.html">About</a><a href="404.html">Careers</a><a href="404.html">Press</a><a href="#demo">Contact</a></div>
+      <div><h2>Product</h2><a href="#product">Charting</a><a href="#platform" data-plat-tab="appointments">Scheduling</a><a href="#product" data-record-open="meds">e-Prescribing</a><a href="#platform" data-plat-tab="analytics">Analytics</a><a href="#showcase">In practice</a></div>
+      <div><h2>Solutions</h2><a href="#product">Primary care</a><a href="#platform">Specialty clinics</a><a href="#workflow">Multi-site groups</a><a href="#security">Behavioral health</a></div>
+      <div><h2>Resources</h2><a href="#security">Security</a><a href="#workflow">Implementation</a><a href="#trust-proof">Why trust Veyra</a><a href="#showcase">In practice</a></div>
+      <div><h2>Company</h2><a href="404.html">About</a><a href="404.html">Careers</a><a href="404.html">Press</a><a href="#demo">Contact</a></div>
     </div>
   </div>
   <div class="shell ftr__bar">
-    <span>© 2026 Veyra Health, Inc. All rights reserved.</span>
+    <span>Veyra is a fictional product concept. © 2026 — design and code only.</span>
     <nav aria-label="Legal"><a href="404.html">Privacy</a><a href="404.html">Terms</a><a href="404.html">HIPAA notice</a><a href="404.html">Status</a></nav>
   </div>
 </footer>

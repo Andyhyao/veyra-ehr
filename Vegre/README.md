@@ -203,6 +203,15 @@ fictional demo rows. Its styles are prefixed `record-`.
   the hero and from the case-study phone mockup. One copy is still rendered into
   the hero phone's loop (`../motion-hero-phone/compositions/mobile.html` draws the
   mobile hero, button and all); re-render there if the button stays gone for good.
+- **Touch targets** are 44px minimum on the device cells, the footer columns and
+  the legal row. The header logo and burger need `flex:none` at phone widths or
+  the row shrinks them under 44px, which is why `.hdr__in` also drops its gap to
+  12px there; if you widen the header button, re-check that the row still fits.
+- **Social cards** live in `<head>`: `og:*` plus `twitter:card`, with
+  `assets/img/og-cover.jpg` (1200 x 630, composed from the hero laptop still).
+  `og:image`, `og:url` and `rel=canonical` need the real origin, so the three
+  absolute-url lines are marked TODO and two are commented out until there is a
+  domain to put in them.
 - CSS and JS are loaded with a `?v=` query. Bump it when you edit them, or a
   browser that cached the old file will keep serving it.
 
