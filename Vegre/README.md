@@ -209,11 +209,15 @@ fictional demo rows. Its styles are prefixed `record-`.
   the legal row. The header logo and burger need `flex:none` at phone widths or
   the row shrinks them under 44px, which is why `.hdr__in` also drops its gap to
   12px there; if you widen the header button, re-check that the row still fits.
+- **Deployed on Vercel** at <https://veyra-ehr.vercel.app>, from this repo's
+  `main`. `vercel.json` at the repo root points `outputDirectory` at `Vegre/`,
+  so there is no build step; `404.html` is served automatically for unknown
+  paths with a real 404 status.
 - **Social cards** live in `<head>`: `og:*` plus `twitter:card`, with
   `assets/img/og-cover.jpg` (1200 x 630, composed from the hero laptop still).
-  `og:image`, `og:url` and `rel=canonical` need the real origin, so the three
-  absolute-url lines are marked TODO and two are commented out until there is a
-  domain to put in them.
+  `og:image`, `og:url` and `rel=canonical` are absolute against
+  `https://veyra-ehr.vercel.app`; change all four together if the site moves to
+  its own domain.
 - **Icons**: `favicon.svg` for modern browsers, `favicon-32.png` for Safari
   before 16, and `apple-touch-icon.png` (180px) for iOS home screens. All three
   are rasterised from the same SVG, so regenerate them together.
